@@ -14,130 +14,114 @@
 
 # 1. Purpose
 
-## Overview
+## 1.1 Overview
 
-The Product Model defines the conceptual structure of the TaskFlow platform. It establishes a common understanding of the product by describing its business purpose, functional boundaries, core concepts, and the relationships between those concepts.
+...
 
-Rather than documenting how individual features are implemented or used, this document explains how the product is organized at a conceptual level. It provides a stable foundation that allows product teams, engineers, and technical writers to describe the platform consistently, regardless of future changes to the user interface or implementation.
+## 1.2 Objectives
 
-The Product Model represents the product as a collection of interconnected business capabilities instead of independent software features. This perspective encourages documentation that reflects how users understand and interact with the platform rather than how the application is internally developed.
+### 1.2.1 Establish a shared understanding of the platform
 
----
+...
 
-## Objectives
+### 1.2.2 Define the product domain
 
-The Product Model has the following objectives.
+...
 
-### Establish a shared understanding of the platform
+### 1.2.3 Create a stable conceptual foundation
 
-TaskFlow is developed and maintained by multiple disciplines, including engineering, product management, quality assurance, technical documentation, and customer support. Each discipline interacts with the product from a different perspective.
+...
 
-The Product Model provides a common conceptual reference so that all teams describe the same product using the same terminology and relationships. This reduces ambiguity and promotes consistency across both product discussions and documentation.
+### 1.2.4 Support consistent product evolution
 
----
-
-### Define the product domain
-
-Every software product operates within a defined business domain. For TaskFlow, that domain is enterprise work management, Agile planning, DevOps, and software delivery.
-
-The Product Model identifies the concepts that belong within this domain and distinguishes them from external systems, third-party services, or implementation-specific details. Establishing these boundaries helps maintain a clear product identity as new capabilities are introduced.
+...
 
 ---
 
-### Create a stable conceptual foundation
+# 2. Document Authority
 
-User interfaces evolve. Features are enhanced. Navigation changes. Technologies are replaced.
-
-The underlying concepts of the product, however, should remain significantly more stable.
-
-The Product Model captures these long-term concepts so that documentation, onboarding material, training resources, and future product enhancements can evolve without redefining the core structure of the platform.
+...
 
 ---
 
-### Support consistent product evolution
+# 3. Guiding Principles
 
-As TaskFlow grows, new modules and capabilities should extend the existing product model rather than introduce competing concepts.
+## 3.1 The product is capability-driven
 
-This approach preserves conceptual consistency across releases and ensures that future enhancements integrate naturally with the existing platform instead of creating isolated feature sets.
+...
 
----
+## 3.2 Concepts are independent of implementation
 
-## Document Authority
+...
 
-The Product Model serves as the authoritative conceptual reference for the TaskFlow platform.
+## 3.3 Relationships define the platform
 
-When differences arise between terminology used in individual documents and the concepts defined within this model, the Product Model takes precedence until an approved architectural review updates the conceptual design.
-
-This governance approach ensures that terminology evolves intentionally rather than gradually diverging across documentation, training materials, and internal communication.
-
-The Product Model is expected to remain relatively stable throughout the product lifecycle. New capabilities may extend the model, but they should not redefine established concepts without careful consideration of their impact on the broader product ecosystem.
+...
 
 ---
 
-## Guiding Principles
+# 4. Scope
 
-The Product Model is based on several principles that influence how the TaskFlow platform is understood and described.
-
-### The product is capability-driven
-
-TaskFlow is organized around business capabilities rather than individual software screens. Features such as Sprint Planning, Bug Tracking, CI/CD, and Wiki are viewed as capabilities that support a broader software delivery lifecycle.
-
-This perspective allows the product to evolve without requiring changes to its conceptual structure whenever the user experience is redesigned.
+...
 
 ---
 
-### Concepts are independent of implementation
+# 5. Relationship with Other Documents
 
-The Product Model intentionally separates business concepts from implementation details.
-
-For example, a Workspace remains a Workspace regardless of how it is presented in the user interface. Similarly, a Sprint, Project, or Pipeline retains its conceptual meaning even if future releases introduce new workflows or visual designs.
-
-Maintaining this separation improves the longevity of both the product model and the documentation built upon it.
+...
 
 ---
 
-### Relationships define the platform
+# 6. Product Vision
 
-The value of the Product Model lies not only in identifying product components but also in explaining how those components interact.
-
-For example, Projects exist within Workspaces, Sprints belong to Projects, User Stories are planned within Sprints, Tasks implement User Stories, and Releases package completed work for deployment.
-
-Understanding these relationships provides a more accurate representation of the platform than viewing each feature in isolation.
+*(We'll write this later. It explains what TaskFlow aims to become from a business perspective.)*
 
 ---
 
-## Scope
+# 7. Product Domain Model
 
-The Product Model focuses on concepts that define the structure of the TaskFlow platform rather than operational or implementation details.
+## 7.1 Purpose
 
-Its purpose is to establish a durable conceptual framework that remains applicable as the platform evolves through future releases.
+The Product Domain Model defines the core business concepts that make up the TaskFlow platform and explains how those concepts relate to one another.
 
-This document includes:
+Rather than viewing TaskFlow as a collection of individual features, the Domain Model presents the platform as an interconnected system where each concept has a clearly defined responsibility, ownership boundary, and relationship with other concepts.
 
-- Business capabilities
-- Core product entities
-- Functional boundaries
-- Relationships between entities
-- Product domains
-- Conceptual ownership
+The Domain Model serves as the conceptual foundation for the entire product. Every user guide, administrator guide, developer guide, API reference, release note, and knowledge base article should use the terminology and relationships established in this section.
 
-This document does not include:
+As TaskFlow evolves, new capabilities should extend the existing domain model instead of introducing competing concepts or inconsistent terminology.
 
-- User interface behavior
-- Step-by-step procedures
-- Configuration instructions
-- API specifications
-- Deployment architecture
-- Feature implementation details
+### 7.1.1 Design Principles
 
-These topics are documented within their respective documentation collections.
+The Product Domain Model is based on the following principles:
+
+- Every concept represents a business capability.
+- Every concept has a clearly defined responsibility.
+- Relationships between concepts are explicit and intentional.
+- Business concepts remain independent of implementation details.
+- The model should evolve through extension rather than replacement.
+
+### 7.1.2 Conceptual Hierarchy
+
+The following hierarchy illustrates the primary relationships between the core concepts within TaskFlow.
+
+```text
+Workspace
+│
+├── Project
+│   ├── Board
+│   │   ├── Sprint
+│   │   │   ├── User Story
+│   │   │   │   ├── Task
+│   │   │   │   └── Bug
+│   │   │   └── Release
+│   │   ├── Wiki
+│   │   ├── Reports
+│   │   └── Pipelines
+│   └── Integrations
+```
 
 ---
 
-## Relationship with Other Documents
+## 7.2 Workspace
 
-The Product Model serves as the starting point for the architectural documentation maintained for TaskFlow.
-
-It provides the conceptual foundation from which the Documentation Architecture, Information Architecture, Glossary, User Guides, Administrator Guides, API References, and Knowledge Base articles are developed.
-
-While those documents describe how information is organized or how the product is used, the Product Model defines the concepts that all subsequent documentation is expected to represent consistently.
+*(We'll start writing this next.)*
