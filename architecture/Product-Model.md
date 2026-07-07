@@ -1771,3 +1771,1732 @@ Future enhancements to Deployment management may include:
 - AI-assisted deployment risk analysis
 
 These enhancements strengthen operational delivery while preserving the Deployment as the authoritative mechanism for introducing software into production environments.
+
+## 7.4.12 Team
+
+### Purpose
+
+A Team represents a structured group of individuals who collaborate to deliver software within a Project. It establishes the organizational unit responsible for planning, developing, testing, documenting, releasing, and maintaining software throughout its lifecycle.
+
+Rather than functioning as a simple collection of users, a Team defines ownership, accountability, collaboration boundaries, and operational responsibilities. It provides the foundation for assigning work, managing permissions, measuring performance, and coordinating software delivery across multiple disciplines.
+
+Within TaskFlow, Teams are the primary operational entities responsible for transforming business requirements into delivered software.
+
+---
+
+### Business Context
+
+Modern software development is inherently collaborative. Delivering a software product requires contributions from developers, quality assurance engineers, technical writers, DevOps engineers, product owners, Scrum Masters, designers, and engineering managers.
+
+Without clearly defined Teams, ownership becomes fragmented, responsibilities overlap, and coordination becomes increasingly difficult as organizations grow.
+
+The Team model enables organizations to group individuals around shared product objectives while maintaining clear accountability for planning, implementation, quality assurance, documentation, and release activities.
+
+As organizations scale, multiple Teams may collaborate within the same Project, each contributing specialized expertise while working toward common business goals.
+
+---
+
+### Business Value
+
+The Team model enables organizations to establish clear ownership and improve collaboration across the software delivery lifecycle.
+
+It helps organizations to:
+
+- Define ownership for software products.
+- Improve cross-functional collaboration.
+- Simplify work assignment.
+- Increase accountability.
+- Support Agile delivery practices.
+- Improve resource planning.
+- Strengthen communication between stakeholders.
+- Measure delivery performance at the team level.
+
+These capabilities enable organizations to scale software development while maintaining operational efficiency and consistent delivery practices.
+
+---
+
+### Responsibilities
+
+A Team is responsible for delivering software and maintaining ownership throughout the product lifecycle.
+
+Its primary responsibilities include:
+
+- Planning Sprint work.
+- Managing Product Backlog items.
+- Implementing User Stories.
+- Resolving software defects.
+- Maintaining technical documentation.
+- Reviewing source code.
+- Managing Releases.
+- Monitoring production health.
+- Participating in Agile ceremonies.
+- Continuously improving delivery practices.
+
+Together, these responsibilities establish the Team as the primary delivery organization within TaskFlow.
+
+---
+
+### Relationships
+
+A Team belongs to a single Project and consists of multiple Members who perform different functional roles.
+
+A Team interacts with:
+
+- Project
+- Board
+- Product Backlog
+- Sprint
+- User Story
+- Task
+- Bug
+- Release
+- Pipeline
+- Deployment
+- Wiki
+- Dashboard
+- Notifications
+
+A Team collaborates continuously throughout planning, development, testing, documentation, deployment, and operational support activities.
+
+Multiple Teams may exist within a single Project when organizational scale or product complexity requires distributed ownership.
+
+---
+
+### Constraints
+
+The Team model operates under the following constraints.
+
+- Every Team belongs to one Project.
+- A Team may contain multiple Members.
+- A Member may belong to multiple Teams when organizational policies allow.
+- Every Team should have defined ownership and responsibilities.
+- Team permissions are governed by organizational security policies.
+- Archived Teams remain available for historical reporting but cannot own new work.
+
+These constraints maintain organizational consistency while supporting collaboration across complex software initiatives.
+
+---
+
+### Lifecycle
+
+A Team typically progresses through the following stages:
+
+1. Team creation
+2. Member onboarding
+3. Role assignment
+4. Project participation
+5. Sprint execution
+6. Continuous delivery
+7. Performance review
+8. Team evolution or archival
+
+As Projects evolve, Teams may expand, merge, reorganize, or transition to support changing business priorities.
+
+---
+
+### Documentation Considerations
+
+Documentation associated with Teams should support collaboration, governance, and operational consistency.
+
+Typical documentation includes:
+
+- Team structure
+- Team responsibilities
+- Member onboarding
+- Working agreements
+- Agile ceremonies
+- Communication guidelines
+- Ownership model
+- Team operating procedures
+
+Maintaining team documentation improves onboarding, strengthens collaboration, and preserves organizational knowledge.
+
+---
+
+### Role in the Software Delivery Lifecycle
+
+The Team serves as the operational engine of the software delivery lifecycle.
+
+While the Product Model defines business concepts such as User Stories, Tasks, Bugs, Releases, and Deployments, it is the Team that plans, executes, validates, documents, and delivers those activities.
+
+Every artifact within TaskFlow ultimately derives its value from the Team responsible for creating, maintaining, and delivering it.
+
+Without Teams, software delivery becomes a collection of disconnected activities rather than a coordinated engineering effort.
+
+---
+
+### Enterprise Example
+
+A software company develops three products within a single Workspace:
+
+- Customer Mobile Application
+- Internal HR Platform
+- Payment Gateway
+
+Each product is managed as an independent Project.
+
+Within the Payment Gateway Project, separate Teams are responsible for API Development, Platform Engineering, Quality Assurance, Technical Documentation, and DevOps Operations.
+
+Although these Teams collaborate toward a shared Release, each maintains ownership of its assigned work while contributing to a common delivery objective.
+
+This organizational model enables large engineering organizations to scale development without losing accountability or operational clarity.
+
+---
+
+### Future Evolution
+
+Future enhancements to Team management may include:
+
+- Capacity planning
+- Team workload analytics
+- Skill matrix management
+- Team performance dashboards
+- AI-assisted resource allocation
+- Cross-team dependency visualization
+- Organizational hierarchy management
+
+These enhancements strengthen organizational collaboration while preserving the Team as the central operational entity within the TaskFlow platform.
+
+## 7.4.13 Member
+
+### Purpose
+
+A Member represents an authenticated individual who interacts with the TaskFlow platform to perform activities related to software planning, development, quality assurance, documentation, operations, and administration.
+
+Rather than functioning solely as a system user, a Member represents an accountable participant within the software delivery lifecycle. Every action performed within TaskFlow—including creating work items, approving Releases, updating documentation, executing Deployments, and modifying project configurations—is performed by a Member and recorded as part of the platform's operational history.
+
+Within TaskFlow, the Member serves as the fundamental identity through which collaboration, ownership, security, and accountability are established.
+
+---
+
+### Business Context
+
+Software delivery depends on collaboration between individuals with different responsibilities, expertise, and levels of authority. Development teams include engineers, testers, product managers, technical writers, DevOps engineers, administrators, and business stakeholders who contribute throughout the product lifecycle.
+
+Managing these contributors requires more than authentication. Organizations must establish clear ownership of work, control access to business-critical information, enforce security policies, and maintain a complete history of operational activities.
+
+The Member model provides this foundation by associating every system activity with a verified identity while enabling organizations to define roles, permissions, team memberships, and ownership responsibilities.
+
+---
+
+### Business Value
+
+The Member model enables organizations to manage people, responsibilities, and accountability consistently across the platform.
+
+It allows organizations to:
+
+- Establish ownership of software delivery activities.
+- Improve collaboration across cross-functional teams.
+- Enforce organizational security policies.
+- Maintain complete operational accountability.
+- Support regulatory compliance and auditing.
+- Simplify resource management.
+- Improve traceability throughout the software development lifecycle.
+- Strengthen governance through role-based access control.
+
+These capabilities ensure that every action performed within TaskFlow can be attributed to an authenticated and authorized individual.
+
+---
+
+### Responsibilities
+
+A Member is responsible for performing authorized activities within the platform according to assigned roles and responsibilities.
+
+Its primary responsibilities include:
+
+- Participating in Projects and Teams.
+- Managing assigned work items.
+- Updating development progress.
+- Creating and maintaining documentation.
+- Reviewing source code.
+- Participating in Agile ceremonies.
+- Managing Releases and Deployments where authorized.
+- Collaborating through comments and notifications.
+- Maintaining profile and availability information.
+
+These responsibilities establish the Member as the primary operational actor within TaskFlow.
+
+---
+
+### Relationships
+
+A Member belongs to one organizational Workspace and may participate in multiple Projects and Teams.
+
+A Member interacts with:
+
+- Workspace
+- Project
+- Team
+- Board
+- Sprint
+- User Story
+- Task
+- Bug
+- Wiki
+- Dashboard
+- Notification
+- Role
+- Permission
+- Audit Log
+
+A Member may create, update, review, approve, assign, or monitor product artifacts depending on assigned responsibilities and organizational policies.
+
+Every operational activity performed by a Member contributes to the platform's audit history.
+
+---
+
+### Constraints
+
+The Member model operates under the following constraints.
+
+- Every Member has a unique identity.
+- Authentication is required before platform access is granted.
+- Permissions are assigned through organizational roles.
+- Members may belong to multiple Teams.
+- Ownership of work items is limited to authorized Members.
+- Deactivated Members remain visible within historical records for audit purposes.
+
+These constraints preserve operational security while ensuring complete historical traceability.
+
+---
+
+### Lifecycle
+
+A Member typically progresses through the following stages:
+
+1. Invitation
+2. Account creation
+3. Identity verification
+4. Workspace onboarding
+5. Team assignment
+6. Active participation
+7. Role modification
+8. Account deactivation or archival
+
+Throughout this lifecycle, the Member retains ownership of historical activities performed within the platform.
+
+---
+
+### Documentation Considerations
+
+Documentation related to Members should support user administration, collaboration, and governance.
+
+Typical documentation includes:
+
+- Creating member accounts
+- Managing user profiles
+- Team membership
+- Role assignment
+- Authentication
+- Multi-factor authentication
+- Account recovery
+- Member deactivation
+- Security best practices
+
+Maintaining accurate Member documentation improves platform security, simplifies onboarding, and reduces administrative effort.
+
+---
+
+### Role in the Software Delivery Lifecycle
+
+The Member represents the human participant responsible for executing software delivery activities.
+
+Every User Story is created by a Member.
+
+Every Task is assigned to a Member.
+
+Every Bug is reported by a Member.
+
+Every Release is approved by a Member.
+
+Every Deployment is initiated by a Member with appropriate authorization.
+
+By associating every operational activity with a verified identity, the Member model provides accountability, governance, and traceability across the entire software delivery lifecycle.
+
+---
+
+### Enterprise Example
+
+A software organization employs engineers, testers, DevOps specialists, technical writers, product managers, and engineering leaders.
+
+Each employee receives a Member account within TaskFlow.
+
+A Developer may belong to both the **Platform Engineering Team** and the **API Modernization Team**, while a Technical Writer contributes to multiple Projects by maintaining product documentation and Release Notes.
+
+Although Members collaborate across organizational boundaries, every activity they perform is recorded under their individual identity, ensuring complete ownership and auditability.
+
+---
+
+### Future Evolution
+
+Future enhancements to Member management may include:
+
+- Single Sign-On (SSO)
+- Enterprise identity federation
+- Skill and certification profiles
+- AI-assisted workload recommendations
+- Presence and availability indicators
+- Organization directory integration
+- Advanced activity analytics
+
+These enhancements strengthen identity management while preserving the Member as the primary operational actor within the TaskFlow platform.
+
+## 7.4.14 Role
+
+### Purpose
+
+A Role represents a predefined collection of responsibilities and access privileges assigned to Members within the TaskFlow platform. It establishes the organizational function of a Member while providing a structured mechanism for controlling access to projects, resources, and administrative capabilities.
+
+Rather than assigning permissions individually to every Member, Roles provide a scalable governance model that simplifies administration, promotes consistency, and enforces organizational security policies.
+
+Within TaskFlow, Roles define both a Member's responsibilities within the software delivery lifecycle and the level of authority granted to perform platform operations.
+
+---
+
+### Business Context
+
+As organizations grow, software development involves hundreds or thousands of Members working across multiple Projects and Teams.
+
+Managing access individually quickly becomes difficult, leading to inconsistent permissions, security risks, and increased administrative effort.
+
+The Role model addresses this challenge by grouping responsibilities and access privileges into reusable organizational functions. Members receive permissions through assigned Roles rather than through direct configuration.
+
+This approach enables organizations to scale securely while maintaining consistent governance across all Projects.
+
+---
+
+### Business Value
+
+The Role model enables organizations to manage access and responsibilities in a consistent and scalable manner.
+
+It helps organizations to:
+
+- Standardize organizational responsibilities.
+- Simplify user administration.
+- Reduce configuration errors.
+- Strengthen platform security.
+- Support organizational governance.
+- Improve compliance with security policies.
+- Accelerate onboarding of new Members.
+- Ensure consistent access across Projects.
+
+These capabilities improve operational efficiency while reducing administrative complexity.
+
+---
+
+### Responsibilities
+
+A Role is responsible for defining the responsibilities and authority associated with a particular organizational function.
+
+Its primary responsibilities include:
+
+- Defining organizational responsibilities.
+- Associating Members with business functions.
+- Grouping related system permissions.
+- Supporting access governance.
+- Simplifying administrative management.
+- Enforcing organizational security policies.
+- Supporting auditing and compliance activities.
+
+Together, these responsibilities establish the Role as the organizational foundation of TaskFlow's access management model.
+
+---
+
+### Relationships
+
+A Role is assigned to one or more Members and is associated with one or more Permissions.
+
+A Role interacts with:
+
+- Member
+- Permission
+- Team
+- Project
+- Workspace
+- Audit Log
+- Security Policies
+
+A Member may hold multiple Roles when organizational policies permit.
+
+Multiple Members may share the same Role while maintaining individual accountability for their actions.
+
+---
+
+### Constraints
+
+The Role model operates under the following constraints.
+
+- Every Role has a unique name within a Workspace.
+- Roles consist of one or more Permissions.
+- Members may hold multiple Roles.
+- Role definitions are managed only by authorized administrators.
+- Changes to Role definitions are recorded for auditing purposes.
+- Removing a Role immediately affects access granted through that Role.
+
+These constraints ensure consistent governance while maintaining security and traceability.
+
+---
+
+### Lifecycle
+
+A Role typically progresses through the following stages:
+
+1. Role creation
+2. Permission assignment
+3. Member assignment
+4. Active usage
+5. Periodic review
+6. Modification
+7. Retirement or archival
+
+Regular reviews help ensure that Roles continue to reflect organizational responsibilities and security requirements.
+
+---
+
+### Documentation Considerations
+
+Documentation related to Roles should support platform governance and administrative management.
+
+Typical documentation includes:
+
+- Creating Roles
+- Assigning Members
+- Managing Role hierarchy
+- Role administration
+- Governance policies
+- Security best practices
+- Role auditing
+- Access reviews
+
+Well-maintained documentation helps administrators implement consistent security policies across the organization.
+
+---
+
+### Role in the Software Delivery Lifecycle
+
+Roles establish responsibility and authority throughout the software delivery lifecycle.
+
+Planning activities may be performed by Product Owners and Scrum Masters.
+
+Development activities are typically performed by Developers.
+
+Quality validation is performed by QA Engineers.
+
+Documentation is maintained by Technical Writers.
+
+Deployment activities are executed by DevOps Engineers or Release Managers.
+
+Administrative operations are managed by Workspace or Project Administrators.
+
+By defining these organizational responsibilities, the Role model ensures that software delivery activities are performed by appropriately authorized personnel.
+
+---
+
+### Enterprise Example
+
+A software organization maintains standardized Roles across all Projects.
+
+Common Roles include:
+
+- Workspace Administrator
+- Project Administrator
+- Product Owner
+- Scrum Master
+- Developer
+- QA Engineer
+- Technical Writer
+- DevOps Engineer
+- Viewer
+
+When a new Developer joins a Team, assigning the **Developer** Role automatically grants the permissions required to participate in Sprint planning, update Tasks, create Pull Requests, and resolve Bugs without requiring individual permission assignments.
+
+This approach simplifies administration while ensuring consistent access across the organization.
+
+---
+
+### Future Evolution
+
+Future enhancements to Role management may include:
+
+- Custom organizational Roles
+- Role templates
+- Hierarchical Role inheritance
+- Temporary delegated Roles
+- AI-assisted Role recommendations
+- Cross-workspace Role synchronization
+- Advanced governance reporting
+
+These enhancements improve organizational scalability while preserving the Role as the primary mechanism for defining responsibilities within the TaskFlow platform.
+
+## 7.4.15 Permission
+
+### Purpose
+
+A Permission represents an authorized system capability that determines which actions a Member is permitted to perform within the TaskFlow platform. It provides the foundation for controlling access to product resources, administrative functions, and operational activities while ensuring that Members interact only with the information and functionality required for their responsibilities.
+
+Unlike Roles, which define organizational responsibilities, Permissions define individual system capabilities. Together, Roles and Permissions establish a secure and scalable access control model that protects organizational assets while supporting efficient collaboration.
+
+Within TaskFlow, Permissions govern every significant interaction with the platform, from creating a Project to deploying a Release.
+
+---
+
+### Business Context
+
+Enterprise software platforms manage sensitive business information, intellectual property, customer data, deployment pipelines, and administrative configurations. Unrestricted access increases the risk of accidental changes, security incidents, operational failures, and compliance violations.
+
+Organizations therefore require a structured authorization model that limits system capabilities according to business responsibilities.
+
+The Permission model enables TaskFlow to enforce security policies consistently by controlling access to individual platform operations while maintaining flexibility across different organizational structures.
+
+---
+
+### Business Value
+
+The Permission model enables organizations to protect critical resources without restricting productive collaboration.
+
+It helps organizations to:
+
+- Enforce organizational security policies.
+- Protect sensitive product information.
+- Reduce unauthorized system changes.
+- Support regulatory compliance.
+- Simplify security administration.
+- Improve operational governance.
+- Maintain complete auditability.
+- Scale securely as organizations grow.
+
+These capabilities strengthen platform security while enabling Members to perform their responsibilities efficiently.
+
+---
+
+### Responsibilities
+
+A Permission is responsible for authorizing specific system operations.
+
+Its primary responsibilities include:
+
+- Controlling access to platform functionality.
+- Restricting administrative operations.
+- Protecting project resources.
+- Governing deployment activities.
+- Securing documentation management.
+- Supporting approval workflows.
+- Recording authorization decisions.
+- Enforcing organizational security policies.
+
+Together, these responsibilities establish Permissions as the primary mechanism for system authorization within TaskFlow.
+
+---
+
+### Relationships
+
+A Permission is assigned to one or more Roles and indirectly granted to Members through those Roles.
+
+A Permission interacts with:
+
+- Role
+- Member
+- Workspace
+- Project
+- Team
+- Audit Log
+- Security Policies
+
+Multiple Permissions may be grouped within a single Role to support common organizational responsibilities.
+
+Every protected system operation validates the required Permission before execution.
+
+---
+
+### Constraints
+
+The Permission model operates under the following constraints.
+
+- Every Permission has a unique identifier.
+- Permissions are managed only by authorized administrators.
+- Members inherit Permissions through assigned Roles.
+- Permissions may be granted or revoked only through approved governance processes.
+- Every authorization decision is recorded for auditing purposes.
+- System-defined Permissions cannot be modified directly.
+
+These constraints maintain security, consistency, and governance across the platform.
+
+---
+
+### Security Principles
+
+The Permission model follows established enterprise security principles.
+
+#### Least Privilege
+
+Members receive only the Permissions necessary to perform their assigned responsibilities. Limiting access reduces operational risk and minimizes the potential impact of accidental or unauthorized actions.
+
+#### Separation of Duties
+
+Critical business operations may require different Members or Roles to perform related activities.
+
+For example, a Member responsible for approving a Release should not necessarily be the same Member authorized to deploy that Release into the production environment.
+
+This separation reduces operational risk and strengthens organizational governance.
+
+#### Principle of Explicit Authorization
+
+Access to protected functionality is granted intentionally rather than assumed. Members receive access only through approved Roles or administrative assignment processes.
+
+---
+
+### Lifecycle
+
+A Permission typically progresses through the following stages:
+
+1. Permission definition
+2. Role association
+3. Member authorization
+4. Permission validation
+5. Usage monitoring
+6. Security review
+7. Permission retirement
+
+Periodic reviews help ensure that Permissions continue to align with organizational policies and evolving security requirements.
+
+---
+
+### Documentation Considerations
+
+Documentation related to Permissions should support administrators responsible for platform security and governance.
+
+Typical documentation includes:
+
+- Permission reference
+- Permission categories
+- Assigning Permissions through Roles
+- Managing access requests
+- Security governance
+- Least privilege implementation
+- Access review procedures
+- Troubleshooting authorization issues
+
+Comprehensive documentation reduces configuration errors and improves the consistency of security administration.
+
+---
+
+### Role in the Software Delivery Lifecycle
+
+Permissions ensure that software delivery activities are performed only by authorized Members.
+
+For example:
+
+- Creating a Project requires project administration Permissions.
+- Managing Sprint configuration requires planning Permissions.
+- Approving Releases requires release management Permissions.
+- Executing Deployments requires deployment Permissions.
+- Publishing documentation requires documentation management Permissions.
+
+By controlling access at every stage of the software delivery lifecycle, the Permission model protects organizational assets while maintaining operational efficiency.
+
+---
+
+### Enterprise Example
+
+Within a financial technology organization, a Technical Writer is responsible for maintaining user documentation and Release Notes.
+
+The assigned Role includes Permissions to:
+
+- Create documentation
+- Edit Wiki pages
+- Publish Release Notes
+- Review documentation changes
+
+However, the same Member does **not** receive Permissions to:
+
+- Delete Projects
+- Modify Pipeline configurations
+- Approve production Releases
+- Execute Deployments
+
+Similarly, a DevOps Engineer receives Permissions to manage Pipelines and Deployments but cannot modify organizational security settings reserved for Workspace Administrators.
+
+This separation ensures that Members have access appropriate to their responsibilities while protecting critical platform operations.
+
+---
+
+### Future Evolution
+
+Future enhancements to Permission management may include:
+
+- Attribute-Based Access Control (ABAC)
+- Conditional access policies
+- Time-limited Permissions
+- Just-in-Time (JIT) access
+- AI-assisted permission recommendations
+- Risk-based authorization
+- Automated access certification
+
+These enhancements strengthen platform security while preserving Permissions as the primary authorization mechanism within the TaskFlow platform.
+
+## 7.4.16 Wiki
+
+### Purpose
+
+A Wiki represents the centralized knowledge repository of the TaskFlow platform. It enables Teams to create, organize, maintain, and share structured documentation throughout the software development lifecycle.
+
+Unlike work items such as User Stories, Tasks, or Bugs, which describe activities performed during software delivery, the Wiki preserves organizational knowledge that remains valuable beyond the completion of individual development efforts.
+
+Within TaskFlow, the Wiki serves as the authoritative source of product, technical, operational, and organizational documentation.
+
+---
+
+### Business Context
+
+Software development generates significant knowledge that extends beyond source code. Product decisions, architectural designs, operational procedures, API specifications, troubleshooting guides, onboarding material, and release documentation must remain accessible long after implementation activities have concluded.
+
+Without a centralized documentation system, critical information becomes fragmented across emails, chat platforms, personal notes, and disconnected storage locations. This fragmentation increases onboarding time, reduces productivity, and creates operational risk when knowledge is lost.
+
+The Wiki addresses these challenges by providing a structured documentation environment where information can be created, reviewed, maintained, and shared throughout the organization.
+
+---
+
+### Business Value
+
+The Wiki enables organizations to preserve institutional knowledge while improving collaboration across technical and business teams.
+
+It helps organizations to:
+
+- Establish a single source of truth.
+- Reduce knowledge loss.
+- Improve employee onboarding.
+- Support product documentation.
+- Document operational procedures.
+- Improve collaboration across distributed teams.
+- Reduce repeated questions.
+- Maintain historical documentation.
+
+These capabilities strengthen organizational knowledge management while improving engineering efficiency.
+
+---
+
+### Responsibilities
+
+The Wiki is responsible for managing documentation throughout its lifecycle.
+
+Its primary responsibilities include:
+
+- Creating structured documentation.
+- Organizing documentation into logical spaces.
+- Managing document versions.
+- Supporting collaborative editing.
+- Recording document history.
+- Managing documentation reviews.
+- Publishing approved documentation.
+- Preserving historical knowledge.
+
+Together, these responsibilities establish the Wiki as the central knowledge management capability within TaskFlow.
+
+---
+
+### Relationships
+
+The Wiki belongs to a Project and may contain documentation created by multiple Teams and Members.
+
+A Wiki interacts with:
+
+- Project
+- Team
+- Member
+- User Story
+- Task
+- Release
+- API Documentation
+- Knowledge Base
+- Attachments
+- Comments
+- Search
+
+Documentation may reference work items, Releases, Pipelines, or other Wiki pages to maintain traceability across the software delivery lifecycle.
+
+---
+
+### Constraints
+
+The Wiki operates under the following constraints.
+
+- Every Wiki belongs to one Project.
+- Every page has a unique location within the documentation hierarchy.
+- Editing permissions are controlled through Roles and Permissions.
+- Published documentation remains version controlled.
+- Historical versions cannot be deleted without administrative authorization.
+- Documentation reviews must be completed before publication where governance policies require approval.
+
+These constraints ensure documentation quality, governance, and long-term maintainability.
+
+---
+
+### Lifecycle
+
+Documentation within the Wiki typically progresses through the following stages:
+
+1. Document creation
+2. Draft development
+3. Technical review
+4. Editorial review
+5. Approval
+6. Publication
+7. Periodic maintenance
+8. Archival
+
+This lifecycle ensures that documentation remains accurate, reliable, and aligned with product evolution.
+
+---
+
+### Documentation Considerations
+
+The Wiki supports multiple categories of documentation, including:
+
+- Product documentation
+- User Guides
+- Administrator Guides
+- API Documentation
+- Architecture documentation
+- Installation Guides
+- Troubleshooting articles
+- Knowledge Base articles
+- Release Notes
+- Frequently Asked Questions (FAQ)
+
+Organizations should establish documentation standards, style guides, review workflows, and ownership policies to maintain consistency across the documentation ecosystem.
+
+---
+
+### Role in the Software Delivery Lifecycle
+
+Documentation is produced throughout every stage of software delivery rather than only after development is complete.
+
+During planning, Teams document requirements and design decisions.
+
+During implementation, Developers and Technical Writers maintain technical documentation, API references, and architecture guidance.
+
+Before deployment, Release Notes, deployment procedures, and operational documentation are prepared.
+
+Following deployment, troubleshooting articles, known issues, and knowledge base content continue to evolve as new information becomes available.
+
+The Wiki provides the persistent knowledge layer that connects planning, development, deployment, and long-term product support.
+
+---
+
+### Enterprise Example
+
+A product team develops a cloud-based financial platform.
+
+Throughout development, the Team maintains documentation within the Project Wiki, including:
+
+- Product Overview
+- Architecture Documentation
+- API Reference
+- Database Design
+- Deployment Guide
+- Administrator Guide
+- User Guide
+- Release Notes
+- Troubleshooting Articles
+- Internal Engineering Standards
+
+When a new engineer joins the organization, the Wiki provides immediate access to product knowledge, reducing onboarding time and enabling faster contribution to ongoing development activities.
+
+---
+
+### Future Evolution
+
+Future enhancements to Wiki management may include:
+
+- AI-assisted content generation
+- Intelligent document recommendations
+- Automatic documentation health analysis
+- Documentation quality scoring
+- Broken link detection
+- Semantic search
+- Knowledge graph visualization
+- Automated content review workflows
+
+These enhancements strengthen organizational knowledge management while preserving the Wiki as the authoritative documentation platform within TaskFlow.
+
+## 7.4.17 Comment
+
+### Purpose
+
+A Comment represents a recorded discussion associated with a product artifact. It enables Members to communicate, provide feedback, request clarification, document decisions, and collaborate without modifying the underlying content.
+
+Unlike the primary artifact to which it belongs, a Comment captures contextual information surrounding work rather than the work itself. It preserves conversations, design decisions, implementation rationale, review feedback, and operational observations as part of the permanent project history.
+
+Within TaskFlow, Comments provide the collaborative communication layer that connects people with software delivery activities.
+
+---
+
+### Business Context
+
+Software development is a collaborative process involving continuous discussion between engineers, testers, product managers, technical writers, DevOps engineers, and business stakeholders.
+
+Questions arise during implementation.
+
+Requirements change.
+
+Design decisions evolve.
+
+Defects require investigation.
+
+Documentation undergoes review.
+
+Without a structured communication mechanism, these discussions become scattered across emails, instant messaging platforms, and meetings, making important project knowledge difficult to locate and impossible to trace.
+
+The Comment model centralizes these conversations by associating discussions directly with the relevant product artifacts.
+
+---
+
+### Business Value
+
+The Comment model enables organizations to preserve collaborative knowledge while improving communication across software teams.
+
+It helps organizations to:
+
+- Centralize technical discussions.
+- Preserve design decisions.
+- Improve collaboration across distributed teams.
+- Reduce dependency on external communication tools.
+- Maintain complete discussion history.
+- Support documentation reviews.
+- Improve issue investigation.
+- Increase transparency across projects.
+
+These capabilities improve collaboration while preserving valuable organizational knowledge.
+
+---
+
+### Responsibilities
+
+A Comment is responsible for capturing and preserving collaborative discussions.
+
+Its primary responsibilities include:
+
+- Recording conversations.
+- Providing contextual feedback.
+- Supporting document reviews.
+- Requesting clarification.
+- Capturing technical decisions.
+- Maintaining discussion history.
+- Supporting threaded conversations.
+- Notifying relevant Members.
+
+Together, these responsibilities establish Comments as the primary communication mechanism within TaskFlow.
+
+---
+
+### Relationships
+
+A Comment may be associated with multiple product artifacts.
+
+A Comment interacts with:
+
+- Member
+- Team
+- User Story
+- Task
+- Bug
+- Wiki
+- Release
+- Attachment
+- Notification
+- Audit Log
+
+Comments inherit the visibility and access permissions of the artifact to which they belong.
+
+Every Comment contributes to the historical context of that artifact.
+
+---
+
+### Constraints
+
+The Comment model operates under the following constraints.
+
+- Every Comment is associated with one primary artifact.
+- Every Comment has an author.
+- Comments are timestamped upon creation.
+- Edited Comments retain edit history.
+- Deleted Comments are recoverable by authorized administrators where governance policies require retention.
+- Visibility follows the permissions of the parent artifact.
+
+These constraints ensure accountability while preserving discussion integrity.
+
+---
+
+### Lifecycle
+
+A Comment typically progresses through the following stages:
+
+1. Creation
+2. Review
+3. Reply
+4. Editing (if permitted)
+5. Resolution (where applicable)
+6. Historical retention
+
+Unlike work items, Comments are not completed. They remain available as part of the historical context of the associated artifact.
+
+---
+
+### Documentation Considerations
+
+Documentation related to Comments should support effective collaboration and communication.
+
+Typical documentation includes:
+
+- Adding Comments
+- Mentioning Members
+- Threaded discussions
+- Editing Comments
+- Resolving discussions
+- Comment notifications
+- Markdown formatting
+- Collaboration best practices
+
+Organizations should encourage Members to use Comments for project-related discussions rather than external communication channels whenever practical.
+
+---
+
+### Role in the Software Delivery Lifecycle
+
+Comments provide the communication layer that connects every stage of software delivery.
+
+During planning, stakeholders discuss requirements and priorities.
+
+During implementation, developers collaborate on technical decisions.
+
+During testing, QA Engineers provide defect analysis.
+
+During documentation reviews, Technical Writers receive editorial feedback.
+
+During deployment, operational teams record observations and deployment outcomes.
+
+By preserving these conversations alongside the associated work, Comments provide valuable historical context that supports future maintenance, troubleshooting, and knowledge transfer.
+
+---
+
+### Enterprise Example
+
+A QA Engineer reports a Bug affecting the payment gateway.
+
+Rather than updating the Bug description repeatedly, Developers, QA Engineers, Product Owners, and Technical Writers collaborate through a series of Comments.
+
+The discussion includes:
+
+- Root cause analysis
+- Log excerpts
+- Implementation decisions
+- Testing observations
+- Documentation updates
+- Release approval notes
+
+Months later, when a similar issue occurs, the historical discussion provides valuable insight into the previous investigation and significantly reduces diagnosis time.
+
+---
+
+### Future Evolution
+
+Future enhancements to Comment management may include:
+
+- AI-generated discussion summaries
+- Intelligent action item detection
+- Sentiment analysis
+- Automatic decision extraction
+- Voice and video comments
+- Translation for multilingual teams
+- Smart discussion search
+
+These enhancements strengthen collaboration while preserving Comments as the primary communication mechanism within the TaskFlow platform.
+
+## 7.4.18 Attachment
+
+### Purpose
+
+An Attachment represents a supplementary digital asset associated with a product artifact. It provides additional information, evidence, or supporting material that enhances understanding, validation, collaboration, and decision-making throughout the software delivery lifecycle.
+
+Unlike Comments, which capture discussions, or Wiki pages, which provide structured documentation, Attachments preserve files that communicate information more effectively through visual, binary, or formatted content.
+
+Within TaskFlow, Attachments enrich product artifacts by providing supporting context that cannot be adequately represented using text alone.
+
+---
+
+### Business Context
+
+Software development depends on a wide variety of supporting materials beyond structured documentation.
+
+Engineers share architecture diagrams.
+
+Designers upload interface mockups.
+
+Quality assurance teams attach screenshots and test reports.
+
+DevOps engineers include deployment logs.
+
+Technical Writers reference PDF specifications and exported documentation.
+
+Without a centralized attachment model, these resources become distributed across email threads, shared drives, messaging platforms, and personal storage locations, making information difficult to locate and maintain.
+
+The Attachment model ensures that supporting resources remain directly associated with the work they describe.
+
+---
+
+### Business Value
+
+The Attachment model enables organizations to preserve supporting project assets while improving collaboration and traceability.
+
+It helps organizations to:
+
+- Centralize supporting project files.
+- Improve communication between teams.
+- Preserve engineering evidence.
+- Support documentation and review activities.
+- Improve issue investigation.
+- Maintain historical project records.
+- Simplify knowledge sharing.
+- Reduce dependence on external file repositories.
+
+These capabilities improve collaboration while ensuring that critical project information remains accessible throughout the product lifecycle.
+
+---
+
+### Responsibilities
+
+An Attachment is responsible for storing and associating supporting files with product artifacts.
+
+Its primary responsibilities include:
+
+- Uploading project files.
+- Associating files with product artifacts.
+- Preserving file metadata.
+- Supporting document reviews.
+- Maintaining file version history where applicable.
+- Enforcing access permissions.
+- Supporting secure file downloads.
+- Preserving historical project evidence.
+
+Together, these responsibilities establish Attachments as the primary mechanism for managing supplementary project assets within TaskFlow.
+
+---
+
+### Relationships
+
+An Attachment may be associated with multiple product artifacts.
+
+An Attachment interacts with:
+
+- Member
+- Comment
+- Wiki
+- User Story
+- Task
+- Bug
+- Release
+- Deployment
+- Knowledge Base
+- Audit Log
+
+Attachments inherit the visibility and security policies of the artifact to which they are associated.
+
+Every uploaded file contributes to the historical record of the related artifact.
+
+---
+
+### Constraints
+
+The Attachment model operates under the following constraints.
+
+- Every Attachment is associated with one primary artifact.
+- Every Attachment has an owner.
+- Supported file types are defined by organizational policy.
+- Maximum file size is controlled through administrative configuration.
+- Uploaded files are scanned for security threats before becoming available.
+- Deleted Attachments remain recoverable according to organizational retention policies where required.
+
+These constraints improve security, governance, and operational reliability.
+
+---
+
+### Lifecycle
+
+An Attachment typically progresses through the following stages:
+
+1. File upload
+2. Validation
+3. Security scanning
+4. Association with an artifact
+5. Active usage
+6. Replacement or version update
+7. Archival or retention
+
+Each stage contributes to maintaining file integrity while ensuring that project assets remain available when required.
+
+---
+
+### Documentation Considerations
+
+Documentation related to Attachments should support effective file management across the platform.
+
+Typical documentation includes:
+
+- Uploading files
+- Supported file formats
+- File size limitations
+- Version management
+- Downloading Attachments
+- Replacing existing files
+- Security considerations
+- Storage best practices
+
+Organizations should establish naming conventions and file organization standards to improve discoverability and long-term maintenance.
+
+---
+
+### Role in the Software Delivery Lifecycle
+
+Attachments provide supporting evidence throughout every phase of software delivery.
+
+During planning, Teams upload requirement documents and design diagrams.
+
+During implementation, Developers attach technical specifications and architecture models.
+
+During testing, QA Engineers include screenshots, logs, and execution reports.
+
+During deployment, DevOps engineers upload deployment logs and operational reports.
+
+Following release, Technical Writers publish supporting documentation and reference materials.
+
+By preserving these resources alongside related work items, Attachments strengthen traceability and improve long-term knowledge retention.
+
+---
+
+### Enterprise Example
+
+A Product Owner creates a User Story describing a new authentication feature.
+
+Supporting resources include:
+
+- Product Requirement Document (PDF)
+- User interface mockups
+- API specification
+- Architecture diagram
+
+During implementation, Developers upload sequence diagrams and design updates.
+
+QA Engineers attach test execution reports and screenshots demonstrating successful validation.
+
+Technical Writers upload Release Notes and updated User Guide sections before the Release is approved.
+
+Months later, these Attachments continue to provide valuable historical context for maintenance, troubleshooting, and future feature enhancements.
+
+---
+
+### Future Evolution
+
+Future enhancements to Attachment management may include:
+
+- Automatic file classification
+- AI-generated file summaries
+- Duplicate file detection
+- Optical Character Recognition (OCR)
+- Intelligent file search
+- Preview support for additional file formats
+- Version comparison
+- Cloud storage integration
+
+These enhancements strengthen knowledge management while preserving Attachments as the primary mechanism for managing supporting project assets within the TaskFlow platform.
+
+## 7.4.19 Notification
+
+### Purpose
+
+A Notification represents a system-generated communication that informs Members about events, updates, requests, or activities occurring within the TaskFlow platform. It ensures that important information reaches the appropriate audience at the appropriate time without requiring Members to continuously monitor every Project or artifact.
+
+Unlike Comments, which facilitate discussion, Notifications communicate awareness. They inform Members that an event has occurred and, where appropriate, prompt further action.
+
+Within TaskFlow, Notifications serve as the primary mechanism for maintaining awareness, coordination, and responsiveness across the software delivery lifecycle.
+
+---
+
+### Business Context
+
+Software development is a highly collaborative process involving numerous activities occurring simultaneously across multiple Projects and Teams.
+
+Tasks are assigned.
+
+User Stories change priority.
+
+Bugs are reported.
+
+Releases are approved.
+
+Deployments complete.
+
+Documentation is updated.
+
+Without an automated communication mechanism, Members must manually monitor every artifact to remain informed. This increases the likelihood of missed deadlines, delayed responses, duplicated work, and reduced collaboration.
+
+The Notification model addresses this challenge by automatically communicating significant events to relevant Members while reducing unnecessary interruptions.
+
+---
+
+### Business Value
+
+The Notification model enables organizations to improve communication while ensuring that important project activities receive timely attention.
+
+It helps organizations to:
+
+- Improve team awareness.
+- Reduce communication delays.
+- Support rapid decision-making.
+- Increase responsiveness.
+- Improve collaboration across distributed teams.
+- Reduce missed deadlines.
+- Improve operational transparency.
+- Strengthen project coordination.
+
+These capabilities ensure that software delivery activities progress efficiently while keeping stakeholders informed of meaningful changes.
+
+---
+
+### Responsibilities
+
+A Notification is responsible for communicating platform events to relevant Members.
+
+Its primary responsibilities include:
+
+- Detecting significant platform events.
+- Identifying affected Members.
+- Delivering event information.
+- Supporting real-time communication.
+- Recording notification history.
+- Managing notification preferences.
+- Reducing duplicate notifications.
+- Supporting acknowledgement where required.
+
+Together, these responsibilities establish Notifications as the event communication mechanism within TaskFlow.
+
+---
+
+### Relationships
+
+A Notification is generated by an event occurring within the platform and delivered to one or more Members.
+
+A Notification interacts with:
+
+- Member
+- Team
+- User Story
+- Task
+- Bug
+- Sprint
+- Wiki
+- Comment
+- Attachment
+- Release
+- Deployment
+- Audit Log
+
+Notifications may reference the artifact that generated the event, allowing Members to navigate directly to the associated resource.
+
+---
+
+### Constraints
+
+The Notification model operates under the following constraints.
+
+- Every Notification is generated by a system event.
+- Every Notification has one or more recipients.
+- Members may configure notification preferences.
+- Duplicate notifications should be minimized.
+- Notification delivery status is recorded.
+- Expired notifications remain available according to organizational retention policies.
+
+These constraints improve communication efficiency while maintaining accountability and traceability.
+
+---
+
+### Lifecycle
+
+A Notification typically progresses through the following stages:
+
+1. Event detection
+2. Notification generation
+3. Recipient identification
+4. Delivery
+5. Member acknowledgement or dismissal
+6. Historical retention
+
+Each stage ensures that relevant information reaches the appropriate audience while preserving an operational record of system communications.
+
+---
+
+### Documentation Considerations
+
+Documentation related to Notifications should help Members understand how communication is managed across the platform.
+
+Typical documentation includes:
+
+- Notification types
+- Managing notification preferences
+- Email notifications
+- In-app notifications
+- Mention notifications
+- Assignment notifications
+- Release notifications
+- Troubleshooting notification delivery
+
+Organizations should define notification policies that balance timely communication with minimizing unnecessary interruptions.
+
+---
+
+### Role in the Software Delivery Lifecycle
+
+Notifications maintain awareness throughout every phase of software delivery.
+
+During planning, Members are notified of Sprint assignments and backlog updates.
+
+During development, Notifications communicate Task assignments, code review requests, and Bug updates.
+
+During documentation activities, reviewers receive publication and review requests.
+
+During deployment, operational teams receive deployment status updates, approval requests, and failure alerts.
+
+Following release, stakeholders receive notifications regarding production incidents, documentation updates, and customer-reported issues.
+
+By delivering timely information throughout the software delivery lifecycle, Notifications improve coordination while reducing communication delays.
+
+---
+
+### Enterprise Example
+
+A Developer completes a User Story and marks all associated Tasks as complete.
+
+The platform automatically generates Notifications for:
+
+- The QA Engineer, requesting validation.
+- The Product Owner, indicating the User Story is ready for acceptance.
+- The Technical Writer, requesting documentation updates.
+- The Scrum Master, reflecting Sprint progress.
+- The DevOps Engineer, indicating the feature is eligible for inclusion in an upcoming Release.
+
+Each recipient receives information relevant to their responsibilities without needing to monitor the Project continuously.
+
+---
+
+### Future Evolution
+
+Future enhancements to Notification management may include:
+
+- AI-prioritized notifications
+- Intelligent notification grouping
+- Predictive reminder generation
+- Context-aware delivery
+- Cross-platform notification synchronization
+- Voice assistant integration
+- Adaptive notification preferences
+- Smart notification summaries
+
+These enhancements improve communication efficiency while preserving Notifications as the primary event-driven communication mechanism within the TaskFlow platform.
+
+## 7.4.20 Dashboard
+
+### Purpose
+
+A Dashboard represents a real-time visualization of operational and business information within the TaskFlow platform. It consolidates data from multiple product domains into a unified interface that enables Members to monitor project health, track progress, identify risks, and make informed decisions.
+
+Unlike Reports, which summarize historical information for analysis, Dashboards present continuously updated operational data that supports day-to-day decision-making.
+
+Within TaskFlow, Dashboards provide immediate visibility into software delivery activities across Projects, Teams, Sprints, Releases, and operational environments.
+
+---
+
+### Business Context
+
+Modern software organizations generate large volumes of operational data throughout the software development lifecycle.
+
+Projects progress.
+
+Sprints begin and end.
+
+Tasks change status.
+
+Bugs are resolved.
+
+Pipelines execute.
+
+Deployments succeed or fail.
+
+Without a centralized operational view, stakeholders must navigate multiple screens to understand project status, delaying decision-making and reducing visibility into critical activities.
+
+The Dashboard model addresses this challenge by aggregating information from across the platform into configurable views tailored to different organizational roles.
+
+---
+
+### Business Value
+
+The Dashboard model enables organizations to monitor software delivery continuously while improving operational visibility.
+
+It helps organizations to:
+
+- Monitor project health.
+- Track Sprint progress.
+- Visualize delivery metrics.
+- Identify operational risks.
+- Improve decision-making.
+- Increase organizational transparency.
+- Support executive reporting.
+- Reduce time spent gathering project information.
+
+These capabilities enable stakeholders to make informed decisions using current operational data.
+
+---
+
+### Responsibilities
+
+A Dashboard is responsible for presenting meaningful operational insights.
+
+Its primary responsibilities include:
+
+- Aggregating platform data.
+- Visualizing key performance indicators.
+- Monitoring project progress.
+- Displaying workload distribution.
+- Highlighting operational risks.
+- Supporting configurable widgets.
+- Presenting delivery metrics.
+- Providing role-specific visibility.
+
+Together, these responsibilities establish the Dashboard as the primary operational monitoring capability within TaskFlow.
+
+---
+
+### Relationships
+
+A Dashboard aggregates information from multiple platform entities.
+
+A Dashboard interacts with:
+
+- Workspace
+- Project
+- Team
+- Member
+- Sprint
+- User Story
+- Task
+- Bug
+- Release
+- Pipeline
+- Deployment
+- Report
+
+Dashboards present summarized information without modifying the underlying data.
+
+Their contents automatically reflect changes occurring across the platform.
+
+---
+
+### Constraints
+
+The Dashboard model operates under the following constraints.
+
+- Every Dashboard belongs to a Workspace, Project, or Member.
+- Dashboard visibility follows organizational Permissions.
+- Information displayed is refreshed automatically.
+- Widgets may be configured only by authorized Members.
+- Dashboard layouts are preserved between sessions.
+- Historical analysis is delegated to Reports.
+
+These constraints ensure that Dashboards remain responsive, secure, and operationally relevant.
+
+---
+
+### Lifecycle
+
+A Dashboard typically progresses through the following stages:
+
+1. Dashboard creation
+2. Widget configuration
+3. Data aggregation
+4. Real-time visualization
+5. Continuous refresh
+6. Personalization
+7. Long-term usage
+
+Unlike operational artifacts, Dashboards continuously evolve as organizational requirements and project activities change.
+
+---
+
+### Documentation Considerations
+
+Documentation related to Dashboards should support both administrators and end users.
+
+Typical documentation includes:
+
+- Creating Dashboards
+- Dashboard widgets
+- Customizing layouts
+- Filtering information
+- Sharing Dashboards
+- Managing personal Dashboards
+- Understanding delivery metrics
+- Troubleshooting data synchronization
+
+Organizations should establish standard Dashboard templates to promote consistent operational visibility across Projects.
+
+---
+
+### Role in the Software Delivery Lifecycle
+
+Dashboards provide continuous visibility throughout the software delivery lifecycle.
+
+During planning, Product Owners monitor backlog growth and Sprint readiness.
+
+During implementation, Engineering Managers track development progress and workload distribution.
+
+During testing, QA Engineers monitor defect trends.
+
+During delivery, DevOps Engineers observe Pipeline execution and Deployment health.
+
+Following release, leadership teams evaluate operational performance using live delivery metrics.
+
+By presenting current operational information, Dashboards enable timely intervention before issues affect delivery outcomes.
+
+---
+
+### Enterprise Example
+
+A Scrum Master begins each morning by reviewing the Project Dashboard.
+
+The Dashboard displays:
+
+- Active Sprint progress
+- Story completion percentage
+- Open Bugs by severity
+- Team capacity
+- Pipeline success rate
+- Deployment status
+- Upcoming Releases
+- Documentation review requests
+
+Rather than collecting information from multiple areas of the platform, the Scrum Master immediately identifies risks requiring attention and prioritizes the day's activities accordingly.
+
+---
+
+### Future Evolution
+
+Future enhancements to Dashboard management may include:
+
+- AI-generated operational insights
+- Predictive delivery analytics
+- Executive dashboard templates
+- Personalized recommendations
+- Cross-project portfolio dashboards
+- Real-time anomaly detection
+- Natural language dashboard queries
+- Custom KPI builders
+
+These enhancements improve operational visibility while preserving the Dashboard as the primary monitoring capability within the TaskFlow platform.
