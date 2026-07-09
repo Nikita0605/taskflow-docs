@@ -114,7 +114,7 @@ Code Review
 Testing
    │
    ▼
-Done
+  Done
 ```
 
 Reverse transitions may be configured where the business process requires rework or verification.
@@ -155,13 +155,13 @@ Code Review
 Testing
    │
    ▼
-Done
+  Done
 ```
 
 ### Bug
 
 ```text
-New
+ New
    │
    ▼
 Triaged
