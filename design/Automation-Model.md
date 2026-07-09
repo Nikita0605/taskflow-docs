@@ -31,7 +31,7 @@ An automation rule consists of three logical components:
 When an event occurs, TaskFlow evaluates the configured rule. If all conditions are satisfied, the associated actions are executed.
 
 ```text
-Event
+ Event
    │
    ▼
 Trigger
@@ -125,7 +125,7 @@ Each action executes within the context of the triggering event.
 Automation follows a consistent execution sequence.
 
 ```text
-Platform Event
+ Platform Event
         │
         ▼
 Locate Matching Rules
