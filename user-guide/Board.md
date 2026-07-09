@@ -22,37 +22,6 @@ The board automatically reflects updates made by project members, ensuring that 
 
 ---
 
-# Board Layout
-
-The board is organized into workflow columns that represent different stages of implementation.
-
-A typical Scrum workflow includes:
-
-```text
-Backlog
-    │
-    ▼
-To Do
-    │
-    ▼
-In Progress
-    │
-    ▼
-Code Review
-    │
-    ▼
-Testing
-    │
-    ▼
-Done
-```
-
-Each column contains work items currently assigned to that stage of the workflow. Additional columns can be introduced to support organization-specific development processes.
-
-Project Administrators can customize workflow states without affecting historical sprint data.
-
----
-
 # Work Item Cards
 
 Each work item is displayed as an individual card containing the information required to track implementation progress.
