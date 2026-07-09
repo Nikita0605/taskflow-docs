@@ -5,7 +5,7 @@
 | Product | TaskFlow |
 | Version | 1.0 |
 | Document Type | Architecture Specification |
-| Audience | Solution Architects, Software Engineers, Technical Writers, Product Managers |
+| Audience | Solution Architects, Software Engineers, Product Managers, Technical Writers |
 | Owner | Product Documentation Team |
 | Status | Draft |
 | Last Updated | July 2026 |
@@ -14,81 +14,89 @@
 
 # 1. Purpose
 
-The Work Item Model defines the standard representation of work within the TaskFlow platform.
+The Work Item Model defines the structure of all work items managed within TaskFlow.
 
-It establishes the work item types supported by the product, the relationships between those types, and the common metadata used throughout planning, development, testing, reporting, and release management.
+It specifies the supported work item types, their common attributes, ownership, relationships, lifecycle, and extension model. The objective is to establish a consistent representation of work across planning, development, testing, reporting, automation, and release management.
 
-All planning modules, project workflows, reports, notifications, and integrations reference the Work Item Model.
+All TaskFlow modules that create, manage, or reference work items must conform to this model.
 
 ---
 
 # 2. Work Item Architecture
 
-A work item represents a trackable unit of work.
+A work item is the primary entity used to represent and track work within TaskFlow.
 
-Every work item shares a common structure regardless of its type. Specialized work items extend the base model by introducing additional properties and workflow behaviour without changing the underlying architecture.
+Every work item inherits a common set of system properties and participates in a shared lifecycle. Individual work item types extend the base model with additional fields, workflows, validation rules, and business behaviour.
 
-This approach provides a consistent data model while allowing different work item types to support different business processes.
+The platform treats all work items as first-class entities, allowing them to participate in search, reporting, notifications, automation, permissions, and integrations.
 
 ---
 
-# 3. Work Item Hierarchy
+# 3. Supported Work Item Types
 
-TaskFlow organizes work items using a hierarchical model.
+TaskFlow supports the following work item types.
+
+| Work Item | Purpose |
+|-----------|---------|
+| Epic | Represents a large business initiative that spans multiple user stories. |
+| User Story | Represents a functional requirement that delivers business value. |
+| Task | Represents implementation work required to complete a user story. |
+| Subtask | Represents a smaller unit of work within a task. |
+| Bug | Represents a defect identified during development, testing, or production. |
+| Spike | Represents research or technical investigation required before implementation. |
+
+Each work item type defines its own workflow while inheriting the common work item model.
+
+---
+
+# 4. Hierarchy Model
+
+TaskFlow supports hierarchical relationships between planning and implementation work items.
 
 ```text
 Epic
 │
-├── User Story
-│     │
-│     ├── Task
-│     ├── Bug
-│     └── Subtask
-│
-└── Release
+└── User Story
+      │
+      └── Task
+             │
+             └── Subtask
 ```
 
-Each level represents a different planning granularity.
+Hierarchy represents ownership.
 
-Higher-level work items define business objectives, while lower-level work items represent implementation and verification activities.
+Each child work item belongs to a single parent.
 
----
+Hierarchy is used for:
 
-# 4. Work Item Types
+- Progress calculation
+- Roll-up reporting
+- Sprint planning
+- Capacity planning
+- Work decomposition
 
-TaskFlow supports multiple work item types.
-
-| Work Item | Purpose |
-|------------|---------|
-| Epic | Represents a large business objective or initiative. |
-| User Story | Captures a functional requirement from the user's perspective. |
-| Task | Represents implementation work assigned to an individual contributor. |
-| Bug | Records a software defect requiring investigation or resolution. |
-| Subtask | Represents work that forms part of a parent task. |
-| Release | Groups completed work items delivered in a product release. |
-
-Each work item type defines its own workflow while inheriting the common work item structure.
+Bugs are not part of the hierarchy because they can be reported independently or linked to existing work items.
 
 ---
 
 # 5. Common Properties
 
-All work items inherit a common set of properties.
+All work items inherit the following properties.
 
 | Property | Description |
 |-----------|-------------|
-| Work Item ID | System-generated unique identifier. |
+| Work Item ID | Unique system-generated identifier. |
 | Title | Short description of the work item. |
 | Description | Detailed information about the work. |
 | Status | Current workflow state. |
 | Priority | Business priority assigned to the work item. |
-| Assignee | User responsible for completing the work. |
+| Assignee | User responsible for implementation. |
 | Reporter | User who created the work item. |
 | Labels | Classification tags. |
-| Created Date | Date and time the work item was created. |
-| Updated Date | Date and time of the most recent modification. |
+| Created Date | Timestamp when the work item was created. |
+| Updated Date | Timestamp of the most recent update. |
 
-Individual work item types may introduce additional properties without modifying the base model.
+Individual work item types may define additional fields without modifying the base model.
 
 ---
 
@@ -96,46 +104,45 @@ Individual work item types may introduce additional properties without modifying
 
 Every work item is uniquely identified within a project.
 
-TaskFlow generates immutable identifiers using a type-specific prefix followed by a sequential number.
+TaskFlow generates immutable identifiers using a type-specific prefix.
 
-| Work Item | Identifier Format |
-|------------|------------------|
+| Work Item | Identifier |
+|-----------|------------|
 | Epic | EP-001 |
 | User Story | US-001 |
 | Task | TASK-001 |
+| Subtask | SUB-001 |
 | Bug | BUG-001 |
-| Release | REL-001 |
+| Spike | SPK-001 |
 
-Identifiers are never reused, even after a work item is deleted or archived.
+Identifiers are never reused.
 
 ---
 
 # 7. Relationship Model
 
-Work items may be linked to establish planning, implementation, or dependency relationships.
+In addition to hierarchy, work items may be connected through logical relationships.
 
-TaskFlow supports the following relationship types.
+These relationships do not establish ownership.
 
 | Relationship | Description |
 |--------------|-------------|
-| Parent | Defines hierarchical ownership. |
-| Child | Represents work contained within a parent item. |
 | Blocks | Prevents another work item from progressing. |
-| Blocked By | Indicates a dependency on another work item. |
-| Relates To | Associates work items without creating a dependency. |
-| Duplicates | Identifies duplicate records. |
-| Fixes | Associates implementation work with a reported defect. |
-| Implements | Connects implementation tasks with business requirements. |
+| Blocked By | Indicates that another work item must be completed first. |
+| Relates To | Associates two work items without creating a dependency. |
+| Duplicates | Identifies duplicate work items. |
+| Duplicated By | Indicates another work item represents the same issue. |
+| Implements | Associates implementation work with a user story. |
+| Tests | Associates a test activity with implementation work. |
+| Fixes | Associates development work with a reported defect. |
 
-Relationship integrity is maintained automatically when linked work items are modified.
+Relationship integrity is maintained automatically by the platform.
 
 ---
 
 # 8. Ownership Model
 
-Every work item belongs to a single project.
-
-Ownership is resolved using the following hierarchy.
+Every work item belongs to exactly one project.
 
 ```text
 Workspace
@@ -147,80 +154,114 @@ Project
 Work Item
 ```
 
-A work item cannot belong to multiple projects.
+A work item cannot exist outside a project.
 
-Moving work between projects creates a new project association while preserving activity history and audit records.
+Ownership determines permissions, reporting boundaries, workflow configuration, and notification scope.
 
 ---
 
 # 9. Lifecycle Model
 
-Every work item progresses through a defined lifecycle.
+Every work item progresses through a lifecycle.
 
 The base lifecycle consists of four logical states.
 
 ```text
-Open
-   │
-   ▼
+Created
+    │
+    ▼
 Active
-   │
-   ▼
+    │
+    ▼
 Completed
-   │
-   ▼
+    │
+    ▼
 Archived
 ```
 
-Individual work item types extend this lifecycle by introducing additional workflow states appropriate to their business process.
+Each work item type extends this lifecycle with its own workflow.
+
+For example:
+
+- User Stories introduce **Ready** and **In Review**.
+- Tasks introduce **Code Review** and **Testing**.
+- Bugs introduce **Triaged**, **Resolved**, and **Verified**.
 
 ---
 
-# 10. Dependency Model
+# 10. Release Association
+
+A release is not a work item hierarchy.
+
+Instead, releases reference completed work items that are delivered together.
+
+```text
+Release 2.1
+
+├── Epic EP-03
+├── User Story US-142
+├── User Story US-146
+├── Bug BUG-18
+└── Task TASK-287
+```
+
+A single release may include work from multiple epics, user stories, and defects.
+
+Similarly, an epic may span multiple releases.
+
+---
+
+# 11. Dependency Model
 
 Dependencies define execution order between work items.
 
-A dependency prevents implementation from progressing until the required work has been completed.
+TaskFlow evaluates dependencies during sprint planning, workflow transitions, release validation, and project reporting.
 
-TaskFlow evaluates dependency relationships during sprint planning, workflow transitions, and release validation to identify blocked work.
-
-Dependency information is also included in project reporting and board visualization.
+Dependency information is used to identify blocked work, calculate delivery risk, and visualize implementation sequencing.
 
 ---
 
-# 11. Extensibility
+# 12. Extensibility
 
-The Work Item Model supports extension through custom work item types.
+The Work Item Model supports custom work item types.
 
-Custom types inherit the standard work item structure, including identity management, activity history, permissions, notifications, search indexing, and reporting.
+Custom types inherit:
 
-Extensions may introduce additional properties, workflows, validation rules, and automation without changing the base model.
+- Identity management
+- Activity history
+- Permissions
+- Search indexing
+- Notifications
+- Automation support
+- Reporting
+- Audit history
+
+Extensions may introduce custom fields, workflows, validation rules, and business logic without modifying the base work item architecture.
 
 ---
 
-# 12. Model Constraints
+# 13. Model Constraints
 
 The following constraints apply to all work items.
 
 | ID | Constraint |
 |----|------------|
 | WM-001 | Every work item belongs to one project. |
-| WM-002 | Every work item has a unique identifier. |
-| WM-003 | Every work item has one active workflow state. |
-| WM-004 | Parent-child relationships cannot form circular references. |
-| WM-005 | Deleted work items retain audit history. |
-| WM-006 | Relationship integrity must be maintained across all linked work items. |
-
-These constraints ensure consistency across planning, execution, reporting, and integration services.
+| WM-002 | Every work item has one unique identifier. |
+| WM-003 | A child work item can have only one parent. |
+| WM-004 | Circular parent-child relationships are not permitted. |
+| WM-005 | Relationship references must point to existing work items. |
+| WM-006 | Archived work items remain available for reporting and audit history. |
+| WM-007 | Every work item must have one active workflow state. |
 
 ---
 
-# 13. Related Documents
+# 14. Related Documents
 
 | Document | Purpose |
 |----------|---------|
-| Product Model | Defines the conceptual structure of the platform. |
-| Navigation Model | Defines how work item features are accessed. |
+| Product Model | Defines the conceptual structure of TaskFlow. |
+| Navigation Model | Defines how work items are accessed. |
 | Workflow Model | Defines workflow behaviour for each work item type. |
-| Permission Model | Defines access to work item operations. |
-| Integration Model | Defines external interactions with work items. |
+| Permission Model | Defines authorization rules for work item operations. |
+| Integration Model | Defines external integrations involving work items. |
