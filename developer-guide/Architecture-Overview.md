@@ -1,149 +1,161 @@
-# Architecture Overview
+# Engineering Architecture
 
-## Overview
+## Purpose
 
-TaskFlow is designed as a modular work management platform. The architecture separates core product capabilities from supporting platform services to ensure that business functionality evolves independently of implementation details.
+This document defines the architectural rules that govern application development in TaskFlow.
 
-Each capability owns a clearly defined responsibility and communicates through established interfaces. This separation reduces coupling, simplifies maintenance, and allows new functionality to be introduced without affecting existing product behavior.
+Every implementation must follow these rules to preserve consistency, maintain clear ownership, and prevent architectural drift. These guidelines apply to all modules, features, and platform services.
 
-The architecture is organized around the business capabilities of the platform rather than individual technologies or implementation frameworks.
-
----
-
-# Architectural Objectives
-
-The architecture is designed to achieve the following objectives.
-
-* Establish clear ownership of business capabilities.
-* Isolate product behavior from platform services.
-* Minimize dependencies between functional areas.
-* Support feature-level scalability and independent development.
-* Promote consistency across the application.
-* Simplify maintenance and future enhancement.
-
-Architectural decisions should reinforce these objectives. New capabilities should extend the existing architecture rather than introduce alternative implementation patterns.
+Architectural decisions described in this document are mandatory unless an approved design decision explicitly defines an exception.
 
 ---
 
-# Architecture Model
+# Architecture Philosophy
 
-TaskFlow is organized into four architectural areas.
+TaskFlow is organized around **business capabilities**, not technical components.
 
-```text
-┌──────────────────────────────────────────┐
-│           User Experience                │
-│  Pages • Boards • Dashboards • Views     │
-└──────────────────────────────────────────┘
-                    │
-                    ▼
-┌──────────────────────────────────────────┐
-│         Product Capabilities             │
-│ Projects • Work Items • Sprints          │
-│ Boards • Releases • Workflows            │
-└──────────────────────────────────────────┘
-                    │
-                    ▼
-┌──────────────────────────────────────────┐
-│          Platform Services               │
-│ Permissions • Automation                 │
-│ Notifications • Reporting                │
-│ Custom Fields                            │
-└──────────────────────────────────────────┘
-                    │
-                    ▼
-┌──────────────────────────────────────────┐
-│     External Systems & Infrastructure    │
-│ Authentication • Storage • Integrations  │
-│ APIs • External Services                 │
-└──────────────────────────────────────────┘
-```
+Each capability owns its business rules, data, workflows, and public interfaces. Features are developed and maintained independently, with communication occurring only through published contracts.
 
-Each architectural area represents a distinct responsibility within the platform.
+The architecture prioritizes modularity over convenience. Short-term implementation decisions must not weaken long-term maintainability.
 
 ---
 
-# User Experience
+# Capability Ownership
 
-The User Experience layer provides the entry point into the platform.
+Every business capability owns its implementation.
 
-Its responsibility is to present information, collect user input, and expose product capabilities through a consistent interface. User interface components coordinate interactions with the platform but do not own business rules or platform behavior.
+Ownership includes:
 
-Changes within this area should not affect the underlying business capabilities.
+* Business rules
+* Internal models
+* Validation logic
+* State transitions
+* Persistence coordination
+* Public contracts
 
----
+A capability must not modify or depend on the internal implementation of another capability.
 
-# Product Capabilities
-
-Product Capabilities define the core behavior of TaskFlow.
-
-These capabilities model how work is planned, organized, executed, and delivered across the platform. Concepts such as Projects, Work Items, Workflows, Boards, Sprints, Releases, and Teams belong to this area.
-
-Business rules are owned by the capability that defines them. Responsibilities should not be duplicated across multiple capabilities.
-
----
-
-# Platform Services
-
-Platform Services provide functionality shared across the product.
-
-Unlike Product Capabilities, Platform Services do not define business behavior. Instead, they extend or support the operation of the platform through capabilities such as permissions, automation, notifications, reporting, and configuration.
-
-Platform Services should remain reusable and independent of individual product features.
+When functionality is required across multiple capabilities, it should be promoted to a shared platform service rather than duplicated.
 
 ---
 
-# External Systems and Infrastructure
+# Dependency Rules
 
-External Systems and Infrastructure provide technical capabilities required by the platform.
+Dependencies define how modules communicate.
 
-Examples include authentication providers, external integrations, data persistence, messaging services, and cloud infrastructure.
+The following rules apply throughout the application.
 
-These services support platform operation but do not influence product behavior or business rules.
+| Rule                                                                | Description |
+| ------------------------------------------------------------------- | ----------- |
+| Features communicate through published interfaces only.             |             |
+| Direct feature-to-feature dependencies are prohibited.              |             |
+| Business rules execute within the owning capability.                |             |
+| Shared services must remain independent of feature implementations. |             |
+| Infrastructure dependencies must not define business behavior.      |             |
+| Circular dependencies are not permitted.                            |             |
 
----
-
-# Capability Boundaries
-
-Each capability owns its data, business rules, and operational behavior.
-
-Capabilities communicate through defined interfaces rather than direct implementation dependencies. Internal implementation details remain private to the owning capability.
-
-When functionality is shared across multiple capabilities, it should be promoted to a Platform Service instead of being duplicated.
-
----
-
-# Dependency Model
-
-Dependencies are organized around capability ownership.
-
-* User Experience depends on Product Capabilities.
-* Product Capabilities consume Platform Services where required.
-* Platform Services communicate with External Systems and Infrastructure.
-* External Systems remain independent of product behavior.
-
-Dependencies must always flow toward supporting services. Business capabilities must not depend on presentation concerns.
+Violating these rules introduces hidden coupling and increases maintenance cost.
 
 ---
 
-# Extensibility
+# Module Boundaries
 
-The architecture is designed to accommodate new capabilities without restructuring the platform.
+A module represents an ownership boundary, not a directory.
 
-New functionality should integrate into an existing capability whenever ownership is clear. New architectural areas should be introduced only when a capability cannot be represented within the existing structure.
+Everything inside a module is considered an implementation detail unless explicitly exposed through a public interface.
 
-Maintaining stable capability boundaries reduces implementation complexity and preserves architectural consistency as the platform evolves.
+Modules should expose the smallest possible public surface.
+
+Internal implementation details, helper classes, utility methods, and supporting components must remain private to the owning module.
+
+---
+
+# Communication Model
+
+Modules communicate through explicit contracts.
+
+Permitted communication includes:
+
+* Public interfaces
+* Service contracts
+* Domain events
+* Shared platform services
+
+The following communication patterns are prohibited:
+
+* Direct access to another module's internal implementation
+* Shared mutable state between modules
+* Cross-module database access
+* Runtime modification of another module's business state
+
+Communication should remain explicit, predictable, and versionable.
+
+---
+
+# State Ownership
+
+State has a single owner.
+
+Each piece of application state must have one authoritative source responsible for creating, modifying, and exposing it.
+
+State ownership must never be shared across modules.
+
+When multiple modules require the same information, they consume the owner's published interface instead of maintaining duplicate state.
+
+Duplicated ownership introduces synchronization problems and inconsistent system behavior.
+
+---
+
+# Business Rules
+
+Business rules execute only within the capability that owns the associated business process.
+
+Validation, workflow transitions, authorization checks, and lifecycle management must remain inside the owning capability.
+
+Business logic must not be implemented within presentation components, shared utilities, infrastructure services, or integration layers.
+
+---
+
+# Extension Strategy
+
+New functionality should integrate into the existing architecture before introducing new abstractions.
+
+Before creating a new module, verify that the functionality cannot be implemented within an existing ownership boundary.
+
+New shared services should be introduced only when multiple capabilities require the same behavior.
+
+Architectural growth should occur through extension rather than duplication.
 
 ---
 
 # Architectural Constraints
 
-| ID     | Constraint                                                       |
-| ------ | ---------------------------------------------------------------- |
-| AR-001 | Every capability has a single ownership boundary.                |
-| AR-002 | Business rules are owned by Product Capabilities.                |
-| AR-003 | Platform Services support product behavior but do not define it. |
-| AR-004 | Capabilities communicate through defined interfaces.             |
-| AR-005 | Cross-capability dependencies should be minimized.               |
-| AR-006 | Shared functionality belongs to Platform Services.               |
-| AR-007 | External systems must remain isolated from business rules.       |
+The following constraints are enforced across the application.
 
+| ID     | Constraint                                                            |
+| ------ | --------------------------------------------------------------------- |
+| EA-001 | Every business capability has a single owner.                         |
+| EA-002 | Features communicate through public contracts only.                   |
+| EA-003 | Direct feature-to-feature implementation dependencies are prohibited. |
+| EA-004 | Business rules execute within the owning capability.                  |
+| EA-005 | Shared services remain independent of business capabilities.          |
+| EA-006 | Application state has a single authoritative owner.                   |
+| EA-007 | Circular dependencies are not permitted.                              |
+| EA-008 | Public interfaces must remain stable and implementation-independent.  |
+
+---
+
+# Common Architectural Violations
+
+The following implementation patterns are considered architectural violations.
+
+| Violation                                               | Impact                       |
+| ------------------------------------------------------- | ---------------------------- |
+| Duplicating business rules across multiple capabilities | Inconsistent system behavior |
+| Accessing another module's internal implementation      | Tight coupling               |
+| Sharing mutable state across capabilities               | State synchronization issues |
+| Introducing circular dependencies                       | Reduced maintainability      |
+| Placing business logic in presentation components       | Poor separation of concerns  |
+| Bypassing published interfaces                          | Loss of module isolation     |
+
+All architectural changes should preserve module independence, explicit ownership, and controlled dependencies.
