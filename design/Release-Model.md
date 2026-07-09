@@ -119,7 +119,6 @@ Examples include:
 - 1.0
 - 1.1
 - 2.0
-- 2026.3
 
 The versioning strategy is defined at the project level.
 
