@@ -12,225 +12,106 @@
 
 ---
 
-# 1. About Workspaces
+# Workspace
 
-## Overview
+A workspace is the starting point for everything you do in TaskFlow.
 
-A Workspace is the top-level container in TaskFlow. It provides a shared environment where teams collaborate, manage projects, track software delivery, and maintain documentation.
+It represents your organization, department, or team and provides a shared place where people can plan work, collaborate on projects, manage documentation, and track software delivery. Before you can create a project, invite team members, or plan a sprint, you need a workspace.
 
-Every project, team member, dashboard, report, and wiki page belongs to a workspace. Think of it as the digital home for your organization or department.
+Think of a workspace as the digital home for your team. It keeps related projects together, stores shared knowledge, and provides a single place to manage members, permissions, dashboards, and reports.
 
-For example, a company named **Nova Hub** might create a workspace called **Nova Hub**. Within that workspace, separate projects can be created for products such as a customer portal, mobile application, or internal HR system.
-
-A user must be a member of a workspace before they can access its projects or resources.
-
----
-
-## Workspace Hierarchy
-
-A workspace organizes everything required to manage software development.
+For example, a company named **Nova Hub** might create one workspace called **Nova Hub**. Inside that workspace, the engineering team can manage multiple projects such as a customer portal, a mobile application, and an internal HR system without switching between different environments.
 
 ```text
-Workspace
+Nova Hub
 │
-├── Members
-├── Teams
-├── Projects
-│   ├── Backlog
-│   ├── Sprint
-│   ├── Board
-│   ├── User Stories
-│   ├── Tasks
-│   ├── Bugs
-│   └── Releases
-│
+├── Customer Portal
+├── Mobile Application
+├── Internal HR System
+├── Shared Wiki
 ├── Dashboards
-├── Reports
-├── Wiki
-└── Settings
+└── Reports
 ```
 
-This hierarchy keeps related work together and makes it easier to manage access, collaboration, and reporting.
-
-> **Note**
->
-> A member can belong to multiple workspaces if they work across different organizations or departments.
+Every member who joins the workspace can collaborate on the projects they have permission to access.
 
 ---
 
-# 2. Create a Workspace
+# Create a Workspace
 
-Creating a workspace takes only a few minutes.
+Creating a workspace only takes a few minutes.
 
-To create a new workspace:
+After signing in to TaskFlow, select **Create Workspace** from the home page. Enter a name that clearly identifies your organization or team, choose the appropriate time zone, and complete the setup.
 
-1. Sign in to TaskFlow.
-2. Select **Create Workspace**.
-3. Enter the workspace name.
-4. Choose the organization's time zone.
-5. Select the default language.
-6. Select **Create**.
-
-After the workspace is created, you'll be redirected to the workspace home page.
+Once the workspace is created, TaskFlow opens the workspace home page, where you can begin inviting members and creating projects.
 
 > **Tip**
 >
-> Use a meaningful workspace name such as **Nova Hub**, **Mobile Platform Team**, or **Customer Success**. Avoid temporary names like **Test Workspace** or **Demo**.
+> Choose a name that will still make sense a year from now. Names such as **Nova Hub**, **Engineering**, or **Product Development** are easier to recognize than temporary names like **Demo** or **Testing**.
 
 ---
 
-# 3. Workspace Components
+# Working Inside a Workspace
 
-A workspace brings together the people, projects, and resources required to deliver software.
+As your team begins using TaskFlow, the workspace becomes the central place for day-to-day collaboration.
 
-| Component | Description |
-|----------|-------------|
-| Members | Users who have access to the workspace |
-| Teams | Groups of members working together |
-| Projects | Individual software products or initiatives |
-| Dashboards | Real-time project insights |
-| Reports | Historical project data and analytics |
-| Wiki | Shared documentation and knowledge |
-| Settings | Workspace configuration and administration |
+Projects created inside the workspace automatically share the same member directory, security model, and organizational settings. This allows teams to move between projects without managing separate accounts or permissions.
 
-Each component serves a different purpose while contributing to a single collaborative environment.
+As work progresses, dashboards summarize project activity, reports provide historical insights, and the workspace wiki becomes a shared knowledge base for documentation, meeting notes, and technical decisions.
+
+Although each project has its own backlog, sprint plan, and board, they all remain connected through the same workspace.
 
 ---
 
-# 4. Workspace Settings
+# Managing Members
 
-Workspace settings allow administrators to configure and maintain the workspace.
+Before anyone can contribute to a project, they must become a member of the workspace.
 
-Common settings include:
+Open **Workspace Settings**, select **Members**, and invite users using their email addresses. During the invitation process, assign an appropriate role so each member receives the permissions required for their responsibilities.
 
-- Workspace name
-- Time zone
-- Language
-- Branding
-- Member management
-- Roles and permissions
-- Notification preferences
-- Integrations
-
-Some settings are available only to Workspace Administrators.
-
-> **Best Practice**
->
-> Review workspace settings before inviting team members. Configuring permissions and notification preferences early helps avoid unnecessary changes later.
+As your organization grows, members can be added, removed, or reassigned without affecting existing projects. This makes it easier to manage teams as people join, change roles, or leave the organization.
 
 ---
 
-# 5. Manage Members
+# Workspace Settings
 
-Members must be added to a workspace before they can participate in projects.
+Workspace settings control how the workspace behaves and how members interact with it.
 
-To invite a new member:
+From the settings page, administrators can update the workspace name, manage members, configure roles and permissions, connect external services, and customize notification preferences.
 
-1. Open the workspace.
-2. Select **Members**.
-3. Select **Invite Member**.
-4. Enter the user's email address.
-5. Assign an appropriate role.
-6. Send the invitation.
-
-The invited user receives an email with instructions for joining the workspace.
-
-Workspace Administrators can also update member roles, deactivate accounts, or remove members when access is no longer required.
+Most configuration changes apply to every project within the workspace, so it's a good idea to review these settings before inviting the rest of the team.
 
 ---
 
-# 6. Workspace Roles
+# Best Practices
 
-Every member is assigned a role that determines what they can do within the workspace.
+The way you organize workspaces has a direct impact on collaboration and administration.
 
-Typical roles include:
+For most organizations, one workspace is enough. Create separate projects for different products or initiatives instead of creating multiple workspaces for the same team. This keeps documentation, dashboards, reports, and members in one place while reducing administrative overhead.
 
-| Role | Description |
-|------|-------------|
-| Workspace Administrator | Manages workspace settings, members, and permissions |
-| Project Manager | Creates and manages projects |
-| Scrum Master | Plans and manages sprints |
-| Developer | Works on assigned tasks and user stories |
-| QA Engineer | Reports and verifies bugs |
-| Technical Writer | Creates and maintains documentation |
-| Viewer | Read-only access |
+Review member permissions regularly, especially after team changes. Grant administrative access only to users who are responsible for managing the workspace, and use project roles for day-to-day collaboration whenever possible.
 
-Roles help maintain security while ensuring users have the access they need to perform their responsibilities.
+Finally, establish clear naming conventions from the beginning. Consistent names make projects easier to find and reports easier to understand as the organization grows.
 
 ---
 
-# 7. Manage Projects
+# Common Issues
 
-Projects are created inside a workspace.
-
-Each project has its own backlog, sprint plan, board, releases, documentation, and reports.
-
-A single workspace can contain multiple projects, allowing different teams to work independently while remaining part of the same organization.
-
-For example, the **Nova Hub** workspace might contain the following projects:
-
-- Customer Portal
-- Mobile Application
-- Internal HR System
-- Public Website
-
-This structure keeps work organized without requiring separate workspaces for every initiative.
-
----
-
-# 8. Workspace Dashboard
-
-The Workspace Dashboard provides an overview of activity across all projects.
-
-Depending on your role, the dashboard may display:
-
-- Active projects
-- Sprint progress
-- Team workload
-- Open bugs
-- Recent deployments
-- Upcoming releases
-- Recent activity
-
-The dashboard helps administrators and managers understand the overall health of the workspace without opening individual projects.
-
----
-
-# 9. Best Practices
-
-The following recommendations can help you manage your workspace effectively.
-
-- Create one workspace for each organization or business unit.
-- Use projects to separate products or initiatives.
-- Assign roles based on responsibilities rather than individuals.
-- Remove inactive members regularly.
-- Review permissions periodically.
-- Keep workspace documentation up to date.
-- Use consistent naming conventions for projects and teams.
-
-Following these practices helps maintain an organized and secure workspace as your organization grows.
-
----
-
-# 10. Troubleshooting
-
-| Issue | Possible Solution |
-|-------|-------------------|
+| Issue | Resolution |
+|---------|------------|
 | Unable to create a workspace | Verify that your account has permission to create workspaces. |
 | Invitation email not received | Ask the user to check their spam folder or resend the invitation. |
 | Unable to access a project | Confirm that the user has been added to the workspace and assigned the appropriate role. |
-| Missing workspace settings | Verify that you are signed in as a Workspace Administrator. |
+| Workspace settings are unavailable | Only Workspace Administrators can modify workspace settings. |
 
 ---
 
-# 11. Related Documentation
+# Related Topics
 
-For more information, see the following guides:
+If you're setting up TaskFlow for the first time, continue with the following guides:
 
 - Project
-- Teams
+- Members
 - Roles and Permissions
-- User Management
 - Dashboard
-- Reports
 - Administrator Guide
