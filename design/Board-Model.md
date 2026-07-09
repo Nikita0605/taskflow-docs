@@ -34,7 +34,7 @@ A project may contain multiple boards configured for different planning or repor
 Project
     │
     ▼
-Board
+  Board
     ├── Columns
     ├── Cards
     ├── Swimlanes
