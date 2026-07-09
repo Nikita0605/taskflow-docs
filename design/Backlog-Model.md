@@ -28,7 +28,7 @@ The backlog acts as the bridge between product planning and sprint execution.
 New work enters the backlog, is reviewed and refined over time, and is eventually selected for implementation.
 
 ```text
-Idea
+ Idea
    │
    ▼
 Backlog
