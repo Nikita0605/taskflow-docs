@@ -102,7 +102,7 @@ Only configured transitions are permitted.
 The following example illustrates a task workflow.
 
 ```text
-To Do
+ To Do
    │
    ▼
 In Progress
@@ -128,7 +128,7 @@ Each work item type defines its own workflow.
 ### User Story
 
 ```text
-Draft
+ Draft
    │
    ▼
 Ready
@@ -143,7 +143,7 @@ Completed
 ### Task
 
 ```text
-To Do
+ To Do
    │
    ▼
 In Progress
@@ -161,7 +161,7 @@ Testing
 ### Bug
 
 ```text
- New
+  New
    │
    ▼
 Triaged
