@@ -45,14 +45,15 @@ Dependencies define how modules communicate.
 
 The following rules apply throughout the application.
 
-| Rule                                                                | Description |
-| ------------------------------------------------------------------- | ----------- |
-| Features communicate through published interfaces only.             |             |
-| Direct feature-to-feature dependencies are prohibited.              |             |
-| Business rules execute within the owning capability.                |             |
-| Shared services must remain independent of feature implementations. |             |
-| Infrastructure dependencies must not define business behavior.      |             |
-| Circular dependencies are not permitted.                            |             |
+| Rule                                                           | Purpose                                                                                   |
+| -------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| Features communicate through published interfaces only.        | Preserves module isolation and prevents consumers from depending on implementation details. |
+| Direct feature-to-feature dependencies are prohibited.         | Reduces coupling and allows features to evolve independently.                               |
+| Business rules execute within the owning capability.           | Prevents duplicated business logic and inconsistent system behavior.                        |
+| Shared services remain independent of feature implementations. | Allows services to be reused without introducing feature-specific dependencies.             |
+| Infrastructure dependencies must not define business behavior. | Keeps business decisions independent of technical implementation.                           |
+| Circular dependencies are not permitted.                       | Maintains predictable dependency graphs and simplifies maintenance.                         |
+
 
 Violating these rules introduces hidden coupling and increases maintenance cost.
 
