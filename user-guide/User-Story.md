@@ -58,33 +58,6 @@ Complete these fields before moving the story into an active sprint.
 
 ---
 
-# Story Workflow
-
-Every User Story progresses through a workflow that reflects its implementation status.
-
-```text
-Draft
-   │
-   ▼
-Ready
-   │
-   ▼
-In Progress
-   │
-   ▼
-Code Review
-   │
-   ▼
-Testing
-   │
-   ▼
-Done
-```
-
-Workflow states can be customized by Workspace Administrators to match the organization's development process.
-
----
-
 # Estimation
 
 Before a User Story is selected for a sprint, the team estimates the effort required to complete it.
