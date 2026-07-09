@@ -58,30 +58,6 @@ Depending on your project configuration, additional custom fields may also be av
 
 ---
 
-# Task Workflow
-
-A task moves through predefined workflow states until the work is complete.
-
-```text
-To Do
-   │
-   ▼
-In Progress
-   │
-   ▼
-Code Review
-   │
-   ▼
-Testing
-   │
-   ▼
-Done
-```
-
-Workflow states can be customized by project administrators to match the team's development process.
-
----
-
 # Assign Tasks
 
 Each task should have a single owner.
