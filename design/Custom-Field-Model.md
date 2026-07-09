@@ -141,13 +141,13 @@ Visibility settings affect presentation only and do not alter stored data.
 Custom fields progress through the following lifecycle.
 
 ```text
-Created
+ Created
     │
     ▼
-Active
+  Active
     │
     ▼
-Inactive
+ Inactive
 ```
 
 **Created**  
