@@ -14,88 +14,79 @@
 
 # Backlog
 
-Every project starts with ideas.
+A backlog contains work that has been identified for a project but has not yet been scheduled for development.
 
-Some become features. Others become improvements, technical tasks, or bug fixes. Until the team is ready to work on them, they live in the backlog.
+It serves as the primary planning area where Product Owners and development teams organize, prioritize, and prepare work before it is committed to a sprint. As product requirements evolve, the backlog is continuously updated to reflect changing business priorities, customer feedback, technical improvements, and production issues.
 
-The backlog is a prioritized collection of work planned for a project. It acts as the team's single source of truth for upcoming work, helping everyone understand what needs to be built, why it matters, and what should be worked on next.
-
-Unlike a sprint, which focuses on short-term goals, the backlog represents both immediate priorities and future plans. As business needs change, the backlog changes with them.
+Unlike a sprint, which contains work currently in progress, the backlog represents both immediate priorities and future work planned for the project.
 
 ---
 
-# Understanding the Backlog
+# Understanding Backlog Items
 
-A healthy backlog is always changing.
+The backlog can contain different types of work depending on the needs of the project. New functionality, defect fixes, technical improvements, and research activities are all managed from the same location.
 
-New ideas are added, priorities shift, requirements evolve, and completed work is removed. Rather than treating the backlog as a static list, successful teams review and refine it regularly to ensure it reflects the current direction of the product.
+A typical backlog may include:
 
-For example, the **Customer Portal** project in the **Nova Hub** workspace might contain backlog items such as:
+| Work Item | Purpose |
+|-----------|---------|
+| User Story | Describes a feature from the user's perspective |
+| Bug | Records a defect that requires investigation or resolution |
+| Task | Represents technical or operational work |
+| Epic | Groups related user stories under a larger business objective |
+| Spike | Captures research or investigation required before implementation |
 
-| Priority | Work Item |
-|----------|-----------|
-| High | Enable Multi-Factor Authentication |
-| High | Improve Dashboard Performance |
-| Medium | Export Reports to PDF |
-| Low | Add Dark Mode |
-
-Although every item is valuable, only the highest-priority work is selected during sprint planning.
+Each item should provide enough information for the team to understand the expected outcome before development begins.
 
 ---
 
 # Creating Backlog Items
 
-Work enters the backlog whenever the team identifies something that should be completed.
+New work can be added to the backlog at any stage of the project.
 
-This may include a new feature requested by customers, an improvement suggested during a sprint retrospective, technical debt, security enhancements, or production defects that require attention.
+When creating a backlog item, provide a clear title, a meaningful description, and the information required for the team to evaluate the work. Depending on your team's process, additional details such as acceptance criteria, business priority, story points, attachments, or linked work items may also be included.
 
-Each backlog item should contain enough information for the team to understand the work before it is selected for development. At a minimum, include a clear title, a brief description, and the business value or objective.
-
-As requirements become clearer, backlog items can be expanded with acceptance criteria, attachments, estimates, and supporting documentation.
+Well-defined backlog items reduce uncertainty during planning and improve collaboration between product, development, and quality assurance teams.
 
 ---
 
-# Prioritizing Work
+# Prioritizing the Backlog
 
-Not every item should be developed immediately.
+The order of items in the backlog determines what the team considers during Sprint Planning.
 
-Product Owners are responsible for deciding which work delivers the greatest value to customers and the business. Factors such as customer impact, business goals, technical risk, dependencies, and release commitments often influence this decision.
+Priority is typically influenced by several factors, including business value, customer impact, technical dependencies, implementation effort, risk, and release objectives. As these factors change, backlog items should be reviewed and reordered to ensure the highest-value work remains at the top.
 
-Priorities should be reviewed regularly. An item that was considered low priority last month may become urgent after customer feedback, a production issue, or a change in business direction.
-
-A backlog that reflects current priorities helps the team spend more time delivering value and less time deciding what to work on next.
+Maintaining an accurate priority order allows the team to respond quickly to changing business requirements without losing visibility into future work.
 
 ---
 
 # Backlog Refinement
 
-Backlog refinement is an ongoing activity, not a one-time event.
+Backlog refinement is an ongoing activity performed throughout the project lifecycle.
 
-During refinement sessions, the team reviews upcoming work, clarifies requirements, removes outdated items, estimates effort, and breaks large features into smaller, manageable stories.
+During refinement sessions, the team reviews existing backlog items, clarifies requirements, estimates effort, identifies dependencies, and divides large features into smaller, manageable pieces of work.
 
-These discussions reduce uncertainty before sprint planning and help the team begin each sprint with well-defined work.
-
-Well-maintained backlogs lead to smoother planning sessions and fewer questions during development.
+Regular refinement helps the team enter Sprint Planning with well-understood and implementation-ready backlog items, reducing unnecessary discussions during planning meetings.
 
 ---
 
-# Moving Work into a Sprint
+# From Backlog to Sprint
 
-Sprint Planning marks the transition from planned work to active work.
+Sprint Planning begins with the backlog.
 
-During planning, the team reviews the backlog, discusses priorities, and selects the items they believe can be completed during the sprint. Once selected, those items move from the backlog into the sprint backlog, where they become the team's commitment for the iteration.
+The Product Owner presents the highest-priority backlog items, and the team selects the work that can realistically be completed during the upcoming sprint. Once selected, those items become part of the Sprint Backlog and are considered the team's commitment for that iteration.
 
-Items that aren't selected remain in the backlog and are considered again during future planning sessions.
+Items that are not selected remain in the backlog and continue to be reprioritized as project needs evolve.
 
 ---
 
-# Best Practices
+# Managing the Backlog
 
-A backlog should reflect the current state of the product, not every idea that has ever been discussed.
+An effective backlog requires continuous attention.
 
-Review it regularly, remove outdated items, and keep descriptions clear enough for the team to understand the expected outcome. Large requirements should be divided into smaller stories before development begins, making estimation and planning more predictable.
+Remove duplicate or outdated items, update priorities as business needs change, and ensure that descriptions remain accurate as requirements evolve. Large work items should be divided into smaller stories before they are scheduled for development, making estimation and delivery more predictable.
 
-Instead of filling the backlog with hundreds of unorganized items, focus on maintaining a smaller, well-prioritized list that supports upcoming releases and business objectives.
+A well-maintained backlog enables faster planning, clearer communication, and better visibility across the project.
 
 ---
 
@@ -103,17 +94,18 @@ Instead of filling the backlog with hundreds of unorganized items, focus on main
 
 | Issue | Resolution |
 |--------|------------|
-| Backlog contains too many items | Archive outdated or duplicate work and review priorities regularly. |
-| Team is unclear about requirements | Add descriptions, acceptance criteria, and supporting documentation. |
-| Sprint planning takes too long | Refine backlog items before the planning meeting. |
-| High-priority work is delayed | Review priorities frequently and adjust the backlog as business needs change. |
+| Backlog contains outdated items | Review and archive obsolete work during refinement sessions. |
+| Requirements are unclear | Add descriptions, acceptance criteria, and supporting information before planning. |
+| Sprint Planning takes too long | Refine backlog items before the planning meeting. |
+| Priorities change frequently | Review backlog ordering regularly to reflect current business objectives. |
 
 ---
 
 # Related Topics
 
+- Project
 - Sprint
 - User Story
 - Task
 - Board
-- Project
+- Bug
