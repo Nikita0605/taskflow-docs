@@ -1,41 +1,41 @@
-# Coding Standards
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Coding Standards</title>
+  <style>
+    body { font-family: Segoe UI, Arial, sans-serif; line-height: 1.6; margin: 20px; }
+    h1, h2, h3 { color: #2b5797; }
+    code { background-color: #f4f4f4; padding: 2px 4px; border-radius: 4px; }
+    ul { margin-left: 20px; }
+    pre { background-color: #f9f9f9; padding: 10px; border-radius: 6px; overflow-x: auto; }
+  </style>
+</head>
+<body>
 
-## Introduction
+<h1>Coding Standards</h1>
 
-Code consistency is not about making the codebase look uniform. It is about making implementation predictable.
+<h2>Introduction</h2>
+<p>Code consistency is not about making the codebase look uniform. It is about making implementation predictable.</p>
+<p>A developer should be able to open any feature, understand how it is organized, and implement new functionality without introducing a different development style. Consistent code reduces review effort, simplifies debugging, and allows features to evolve independently.</p>
+<p>This document defines the engineering standards followed throughout the TaskFlow codebase. These standards focus on implementation decisions rather than formatting conventions.</p>
 
-A developer should be able to open any feature, understand how it is organized, and implement new functionality without introducing a different development style. Consistent code reduces review effort, simplifies debugging, and allows features to evolve independently.
+<hr>
 
-This document defines the engineering standards followed throughout the TaskFlow codebase. These standards focus on implementation decisions rather than formatting conventions.
-
----
-
-# 1. Organize code by feature
-
-TaskFlow organizes source code around business capabilities instead of technical layers.
-
-Each feature owns everything required to implement its functionality, including presentation, state management, business logic, repositories, and feature-specific models.
-
-```text
+<h2>1. Organize Code by Feature</h2>
+<p>TaskFlow organizes source code around business capabilities instead of technical layers.</p>
+<pre>
 lib/
 └── features/
     ├── project/
     ├── sprint/
     ├── work_item/
     └── notification/
-```
+</pre>
+<p>This structure keeps related code together, localizes changes, and clarifies ownership.</p>
 
-This structure provides three important benefits.
-
-First, related code remains together. A developer working on Work Items should not navigate multiple directories to understand one workflow.
-
-Second, changes remain localized. Most feature requests affect a single business capability instead of multiple unrelated folders.
-
-Finally, ownership becomes obvious. When a defect is reported in Sprint planning, there should be exactly one feature responsible for implementing that behavior.
-
-### Don't organize by technical layers
-
-```text
+<h3>Don’t Organize by Technical Layers</h3>
+<pre>
 lib/
 ├── screens/
 ├── widgets/
@@ -43,267 +43,95 @@ lib/
 ├── repositories/
 ├── services/
 └── utils/
-```
+</pre>
+<p>This structure increases navigation cost and makes ownership unclear.</p>
 
-Although this structure appears clean initially, it becomes difficult to maintain as the application grows. A single feature eventually spans multiple directories, increasing navigation cost and making ownership unclear.
+<hr>
 
-During code review, ask a simple question:
-
-> Can I understand the entire feature without leaving its directory?
-
-If the answer is no, the implementation should be reconsidered.
-
----
-
-# 2. Keep widgets focused on presentation
-
-Widgets describe the user interface. They should not describe how the application works.
-
-A widget has four responsibilities.
-
-* Display application state.
-* Collect user input.
-* Trigger user actions.
-* Render feedback.
-
-Everything else belongs somewhere else.
-
-For example, consider creating a Work Item.
-
-A widget should trigger the operation.
-
-```dart
+<h2>2. Keep Widgets Focused on Presentation</h2>
+<p>Widgets describe the user interface. They should not describe how the application works.</p>
+<ul>
+  <li>Display application state</li>
+  <li>Collect user input</li>
+  <li>Trigger user actions</li>
+  <li>Render feedback</li>
+</ul>
+<pre>
 ElevatedButton(
   onPressed: () {
-    context.read<WorkItemCubit>().create(request);
+    context.read&lt;WorkItemCubit&gt;().create(request);
   },
   child: const Text('Create'),
 )
-```
+</pre>
+<p>Widgets should not validate business rules, send HTTP requests, or manage workflows.</p>
 
-The widget does not validate business rules, send HTTP requests, write to local storage, publish analytics, or determine workflow transitions.
+<hr>
 
-Those responsibilities belong to the feature implementation.
+<h2>3. Write Business Logic Once</h2>
+<p>Business rules should have a single implementation. Duplicating rules across screens or helpers increases inconsistency.</p>
+<p><em>If changing one business rule requires modifications in multiple files, the implementation probably has the wrong ownership boundary.</em></p>
 
-When widgets begin coordinating business workflows, two problems appear immediately.
+<hr>
 
-The same workflow cannot be reused by another screen, and every business change requires modifying presentation code.
-
-Widgets change frequently. Business rules should not.
-
----
-
-# 3. Write business logic once
-
-Business rules should have a single implementation.
-
-Suppose a Work Item cannot move to **Done** unless every subtask has been completed.
-
-That rule should exist in exactly one place.
-
-Not in the Board screen.
-
-Not in the Details screen.
-
-Not in an API helper.
-
-Not inside a widget callback.
-
-Every duplicate implementation increases the risk of inconsistent application behavior.
-
-When reviewing a pull request, look for repeated validation, repeated calculations, or repeated workflow decisions. These usually indicate that business logic has started leaking outside its owning feature.
-
-A useful rule is:
-
-> If changing one business rule requires modifications in multiple files, the implementation probably has the wrong ownership boundary.
-
----
-
-# 4. Build small widgets
-
-Large widgets are difficult to understand because they mix layout, interaction, conditional rendering, and state updates into a single class.
-
-Split a widget when it represents a different responsibility—not because it reaches an arbitrary line count.
-
-For example:
-
-Instead of
-
-```text
-ProjectScreen
-```
-
-Prefer
-
-```text
+<h2>4. Build Small Widgets</h2>
+<p>Large widgets mix layout, interaction, and state updates. Split widgets by responsibility.</p>
+<pre>
 ProjectScreen
  ├── ProjectHeader
  ├── ProjectSummary
  ├── SprintList
  ├── MemberList
  └── ActivityTimeline
-```
+</pre>
 
-This makes rebuild boundaries explicit and allows individual components to evolve independently.
+<hr>
 
-When extracting a widget, avoid passing unnecessary objects. A widget should receive only the data required to render itself.
+<h2>5. Design for Change</h2>
+<p>Application code changes continuously. The goal is to reduce the number of places that change.</p>
+<ul>
+  <li>If the workflow changes tomorrow, which files will I modify?</li>
+  <li>Can another feature reuse this implementation?</li>
+  <li>Is this behavior specific to this feature or shared?</li>
+</ul>
+<p>Simple code is preferred over clever abstractions written too early.</p>
 
----
+<hr>
 
-# 5. Design for change
+<h2>6. Follow Naming Conventions</h2>
 
-Application code changes continuously.
-
-The goal is not to reduce change but to reduce the number of places that change.
-
-When implementing a feature, ask the following questions before writing code.
-
-* If the workflow changes tomorrow, which files will I modify?
-* Can another feature reuse this implementation?
-* Is this behavior specific to this feature or shared across the application?
-* Am I solving today's requirement or introducing unnecessary abstraction?
-
-Good implementations isolate future changes instead of spreading them across the codebase.
-
-Developers rarely regret writing simple code.
-
-They frequently regret writing clever code too early.
-
-# 6. Follow naming conventions
-
-Consistent naming reduces the time required to understand unfamiliar code. Names should describe purpose, not implementation details.
-
-A developer should understand what a class, method, or variable does without opening its implementation.
-
-## File naming
-
-Use `snake_case` for file names.
-
-Example:
-
-```text
+<h3>File Naming</h3>
+<pre>
 work_item_screen.dart
 project_repository.dart
 notification_service.dart
-```
+</pre>
 
-Avoid:
-
-```text
-WorkItemScreen.dart
-workItemScreen.dart
-workitem.dart
-```
-
-File names should represent the primary responsibility of the file.
-
----
-
-## Class naming
-
-Use `PascalCase` for classes, widgets, states, and models.
-
-Example:
-
-```dart
+<h3>Class Naming</h3>
+<pre>
 class WorkItemScreen {}
-
 class ProjectRepository {}
-
 class UserProfile {}
-```
+</pre>
 
-Avoid abbreviations unless they are commonly understood.
-
-Prefer:
-
-```dart
-UserAuthenticationService
-```
-
-Instead of:
-
-```dart
-UserAuthSvc
-```
-
----
-
-## Variable and method naming
-
-Use `camelCase` for variables, methods, and parameters.
-
-Example:
-
-```dart
+<h3>Variable and Method Naming</h3>
+<pre>
 final projectName = "TaskFlow";
-
 void loadWorkItems() {}
-```
+</pre>
 
-Names should describe intent.
-
-Prefer:
-
-```dart
-isUserAuthenticated
-```
-
-Instead of:
-
-```dart
-flag
-```
-
-Prefer:
-
-```dart
-completedTaskCount
-```
-
-Instead of:
-
-```dart
-count
-```
-
----
-
-## Boolean naming
-
-Boolean values should clearly indicate a condition.
-
-Use prefixes such as:
-
-* `is`
-* `has`
-* `can`
-* `should`
-
-Example:
-
-```dart
+<h3>Boolean Naming</h3>
+<pre>
 bool isLoading;
 bool hasPermission;
 bool canEdit;
-```
+</pre>
 
-Avoid:
+<hr>
 
-```dart
-bool loading;
-bool permission;
-```
-
----
-
-# 7. Handle data, API, and state correctly
-
-Application layers should have clear responsibilities.
-
-A feature should follow the flow:
-
-```text
+<h2>7. Handle Data, API, and State Correctly</h2>
+<p>Follow clear responsibilities:</p>
+<pre>
 Widget
    |
 Cubit / State Management
@@ -313,234 +141,73 @@ Use Case / Business Logic
 Repository
    |
 Data Source / API
-```
+</pre>
 
-Each layer should communicate only with the layer directly responsible for it.
-
----
-
-## Widgets should not access data sources directly
-
-Avoid:
-
-```dart
-class WorkItemScreen extends StatelessWidget {
-
-  Future<void> loadItems() async {
-    await api.getWorkItems();
-  }
-
-}
-```
-
-The widget should only request data through the state layer.
-
-Preferred:
-
-```dart
-context.read<WorkItemCubit>().loadWorkItems();
-```
-
-The widget displays state. It does not manage application workflows.
-
----
-
-## Repository responsibilities
-
-Repositories act as the boundary between business logic and external data sources.
-
-Repositories are responsible for:
-
-* Calling APIs.
-* Reading local storage.
-* Mapping responses into application models.
-* Handling data retrieval failures.
-
-Example:
-
-```dart
+<h3>Repositories</h3>
+<pre>
 class WorkItemRepository {
-
-  Future<List<WorkItem>> getWorkItems() async {
+  Future&lt;List&lt;WorkItem&gt;&gt; getWorkItems() async {
     final response = await api.fetchWorkItems();
-
-    return response.map(
-      (item) => WorkItem.fromJson(item)
-    ).toList();
+    return response.map((item) => WorkItem.fromJson(item)).toList();
   }
-
 }
-```
+</pre>
 
-Repositories should not contain UI-related decisions.
+<h3>Error Handling</h3>
+<pre>
+throw NetworkException("Unable to load work items");
+</pre>
 
----
-
-## Handle errors consistently
-
-Errors should be predictable across features.
-
-Avoid:
-
-```dart
-catch(e) {
- print(e);
-}
-```
-
-Prefer meaningful application errors.
-
-Example:
-
-```dart
-throw NetworkException(
-  "Unable to load work items"
-);
-```
-
-The presentation layer should decide how errors are displayed.
-
-Example:
-
-```text
-Repository:
-"NetworkException"
-
-Cubit:
-"WorkItemLoadingFailed"
-
-Widget:
-Show error message
-```
-
----
-
-## Manage state explicitly
-
-Every feature state should represent a clear application condition.
-
-Avoid unclear states:
-
-```dart
-bool loading;
-bool error;
-```
-
-Prefer meaningful states:
-
-```text
-Initial
-Loading
-Loaded
-Empty
-Failure
-```
-
-Example:
-
-```dart
+<h3>State Management</h3>
+<pre>
 sealed class WorkItemState {}
-
 class WorkItemLoading extends WorkItemState {}
-
 class WorkItemLoaded extends WorkItemState {}
-
 class WorkItemFailure extends WorkItemState {}
-```
+</pre>
 
-Explicit states make UI behavior predictable.
+<hr>
 
----
+<h2>8. Maintain Code Quality</h2>
+<ul>
+  <li>Avoid duplicate logic</li>
+  <li>Keep functions focused</li>
+  <li>Avoid unnecessary abstraction</li>
+</ul>
 
-# 8. Maintain code quality
+<h3>Review Checklist</h3>
+<ul>
+  <li>Feature-based structure followed?</li>
+  <li>Business logic outside widgets?</li>
+  <li>No duplicated logic?</li>
+  <li>Clear, meaningful names?</li>
+  <li>Errors handled consistently?</li>
+  <li>Predictable states?</li>
+</ul>
 
-Readable code is easier to maintain, review, and extend.
+<hr>
 
-The goal is not to write the shortest code. The goal is to write code where another developer can understand the intention quickly.
+<h2>9. Testing Standards</h2>
+<ul>
+  <li><strong>Unit tests:</strong> Validate business rules in isolation.</li>
+  <li><strong>Integration tests:</strong> Ensure repositories interact correctly with APIs and storage.</li>
+  <li><strong>UI tests:</strong> Verify widgets display state and handle input correctly.</li>
+</ul>
 
----
+<hr>
 
-## Avoid duplicate logic
+<h2>10. Documentation Standards</h2>
+<ul>
+  <li>Explain <em>why</em> code exists, not <em>what</em> it does.</li>
+  <li>Provide docstrings for public classes and methods.</li>
+  <li>Keep documentation updated when workflows change.</li>
+  <li>Use plain language, active voice, and short sentences.</li>
+</ul>
 
-The same business rule should not exist in multiple places.
+<hr>
 
-Avoid:
+<h2>11. Review Practices</h2>
+<p>Peer reviews should focus on clarity, maintainability, and adherence to standards.</p>
 
-```dart
-if(task.completed && task.subtasksCompleted){
-   moveToDone();
-}
-```
-
-inside multiple screens.
-
-Prefer:
-
-```dart
-workItem.canMoveToDone();
-```
-
-A rule should have one owner.
-
----
-
-## Keep functions focused
-
-A function should perform one clear responsibility.
-
-Avoid:
-
-```dart
-createProject()
-```
-
-performing:
-
-* validation
-* API calls
-* analytics
-* navigation
-* UI updates
-
-Prefer:
-
-```text
-validateProject()
-createProject()
-trackCreation()
-navigateToProject()
-```
-
-Small responsibilities make code easier to test and modify.
-
----
-
-## Avoid unnecessary abstraction
-
-Not every repeated line requires a new class or framework.
-
-Create abstractions when they provide:
-
-* Reusability.
-* Clear ownership.
-* Easier maintenance.
-
-Avoid creating abstractions only because they appear architecturally advanced.
-
-Simple code is preferred over complicated solutions that solve problems that do not exist yet.
-
----
-
-## Review checklist
-
-Before submitting code, verify:
-
-* Does this follow the feature-based structure?
-* Is business logic outside widgets?
-* Is duplicated logic removed?
-* Are names clear and meaningful?
-* Are errors handled consistently?
-* Can another developer understand this feature without unnecessary navigation?
-
-Code quality is a shared responsibility. Standards exist to make development predictable, not restrictive.
-
+</body>
+</html>
