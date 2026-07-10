@@ -1,84 +1,16 @@
 # Coding Standards
 
-## Overview
+## Keep business logic out of widgets
 
-This document defines the engineering standards for developing and maintaining TaskFlow.
+Widgets are responsible for rendering the current application state and forwarding user actions. They should not coordinate business workflows or make decisions that affect application behavior.
 
-The standards focus on code organization, ownership, implementation consistency, and long-term maintainability. They are intended to support engineering decisions during development and code review.
+When business logic is implemented inside a widget, it becomes tied to the widget lifecycle. The same workflow cannot be reused by another screen, tested independently, or executed outside the UI. As the application grows, widgets become difficult to understand because rendering, state updates, validation, and data access are implemented in the same place.
 
-Formatting conventions are enforced through automated tooling and are not covered in this document.
+Instead, treat a widget as an entry point. Collect the user's intent, then delegate the operation to the feature that owns the business process.
 
----
+### Recommended
 
-# Standard 01 – Feature Ownership
-
-## Objective
-
-Ensure that every business capability has a single implementation owner.
-
-## Standard
-
-Organize code by feature instead of technical layers.
-
-Each feature owns its:
-
-* UI
-* State management
-* Business logic
-* Repository contracts
-* Models specific to the feature
-
-A feature should remain independently maintainable without requiring implementation changes in unrelated features.
-
-## Implementation
-
-A feature module should contain everything required to implement its business capability.
-
-```text
-features/
-└── work_item/
-    ├── presentation/
-    ├── application/
-    ├── domain/
-    ├── data/
-    └── widgets/
-```
-
-Shared functionality should be moved only when multiple features require the same implementation.
-
-## Review Questions
-
-* Does the feature own its business logic?
-* Is functionality duplicated across multiple features?
-* Can the feature be modified without changing another feature?
-
----
-
-# Standard 02 – Widget Responsibility
-
-## Objective
-
-Keep widgets focused on rendering and user interaction.
-
-## Standard
-
-Widgets must not implement business workflows.
-
-A widget may:
-
-* Render application state.
-* Collect user input.
-* Dispatch user actions.
-* Display operation results.
-
-A widget must not:
-
-* Execute business rules.
-* Access persistence directly.
-* Call external services.
-* Coordinate multiple business operations.
-
-## Preferred
+The widget forwards the request.
 
 ```dart
 ElevatedButton(
@@ -89,145 +21,65 @@ ElevatedButton(
 )
 ```
 
-## Avoid
+The feature owns the workflow.
 
 ```dart
-onPressed: () async {
-  final response = await api.createWorkItem(request);
-  await database.save(response);
-  notificationService.send(response);
+Future<void> create(CreateWorkItemRequest request) async {
+  emit(const WorkItemLoading());
+
+  final validation = validator.validate(request);
+
+  if (!validation.isValid) {
+    emit(ValidationFailed(validation.errors));
+    return;
+  }
+
+  final workItem = await repository.create(request);
+
+  emit(WorkItemCreated(workItem));
 }
 ```
 
-## Why
+The widget does not need to know:
 
-Widgets rebuild frequently and should remain presentation-focused. Keeping business workflows outside the UI improves testability, reduces coupling, and keeps rendering logic predictable.
+* how validation works,
+* where data is stored,
+* whether the request is cached,
+* whether analytics are recorded,
+* or whether additional events are published.
 
----
+Its responsibility ends after forwarding the user's action.
 
-# Standard 03 – State Management
-
-## Objective
-
-Maintain a single source of truth for application state.
-
-## Standard
-
-State changes must originate from the owning state management component.
-
-Widgets observe state but do not own business state.
-
-Avoid duplicating the same business data across multiple state objects.
-
-## Preferred
+### Avoid
 
 ```dart
-Cubit
-   │
-   ▼
-Repository
-   │
-   ▼
-State
-   │
-   ▼
-Widget
+onPressed: () async {
+  if (titleController.text.isEmpty) {
+    showError();
+    return;
+  }
+
+  final response = await api.createWorkItem(...);
+
+  await database.save(response);
+
+  notificationService.send(...);
+
+  analytics.track(...);
+
+  Navigator.pop(context);
+}
 ```
 
-## Avoid
+Although this implementation works, the widget now owns validation, networking, persistence, analytics, notifications, and navigation. Any future change to the workflow requires modifying the UI, increasing coupling between presentation and business logic.
 
-```text
-Widget
+### Review guidance
 
-↓
+During code review, ask the following questions:
 
-Local variables
+* Can another screen reuse this workflow without copying code?
+* Would the business process continue to work if the UI changed completely?
+* Is the widget making business decisions instead of forwarding user intent?
+* Does the widget know more than it needs to?
 
-↓
-
-Repository
-
-↓
-
-Another Widget State
-```
-
-Independent copies of the same business data eventually become inconsistent.
-
----
-
-# Standard 04 – Repository Responsibilities
-
-## Objective
-
-Separate business workflows from data access.
-
-## Standard
-
-Repositories manage data retrieval and persistence.
-
-Repositories must not:
-
-* Perform navigation.
-* Update UI state.
-* Display dialogs.
-* Execute presentation logic.
-
-Repositories should return data or operation results. Business decisions remain with the calling feature.
-
-## Review Questions
-
-* Is the repository responsible only for data operations?
-* Does the repository expose implementation details?
-* Can the repository be reused without the UI?
-
----
-
-# Standard 05 – Asynchronous Operations
-
-## Objective
-
-Keep asynchronous workflows predictable and safe.
-
-## Standard
-
-Every asynchronous operation must complete in one of the following states:
-
-* Success
-* Failure
-* Cancellation
-
-Always handle failures explicitly.
-
-Avoid leaving asynchronous operations without completion handling.
-
-Do not use `BuildContext` after an `await` unless the widget is still mounted.
-
-## Preferred
-
-```dart
-if (!context.mounted) return;
-
-Navigator.of(context).pop();
-```
-
-## Why
-
-Widgets can be removed from the widget tree while an asynchronous operation is still running. Accessing an invalid `BuildContext` can result in runtime exceptions.
-
----
-
-# Code Review Expectations
-
-Every implementation should answer the following questions before approval.
-
-| Review Area     | Verification                                         |
-| --------------- | ---------------------------------------------------- |
-| Ownership       | Does the correct feature own the implementation?     |
-| Widget Design   | Is business logic outside the widget?                |
-| State           | Is there a single source of truth?                   |
-| Repository      | Does it manage data only?                            |
-| Async           | Are failures and widget lifecycle handled correctly? |
-| Maintainability | Does the implementation follow existing patterns?    |
-
-Meeting these standards is part of the definition of done for all production code.
+If the answer to any of these questions is **Yes**, move the business workflow into the owning feature before approving the change.
