@@ -168,3 +168,379 @@ Good implementations isolate future changes instead of spreading them across the
 Developers rarely regret writing simple code.
 
 They frequently regret writing clever code too early.
+
+# 6. Follow naming conventions
+
+Consistent naming reduces the time required to understand unfamiliar code. Names should describe purpose, not implementation details.
+
+A developer should understand what a class, method, or variable does without opening its implementation.
+
+## File naming
+
+Use `snake_case` for file names.
+
+Example:
+
+```text
+work_item_screen.dart
+project_repository.dart
+notification_service.dart
+```
+
+Avoid:
+
+```text
+WorkItemScreen.dart
+workItemScreen.dart
+workitem.dart
+```
+
+File names should represent the primary responsibility of the file.
+
+---
+
+## Class naming
+
+Use `PascalCase` for classes, widgets, states, and models.
+
+Example:
+
+```dart
+class WorkItemScreen {}
+
+class ProjectRepository {}
+
+class UserProfile {}
+```
+
+Avoid abbreviations unless they are commonly understood.
+
+Prefer:
+
+```dart
+UserAuthenticationService
+```
+
+Instead of:
+
+```dart
+UserAuthSvc
+```
+
+---
+
+## Variable and method naming
+
+Use `camelCase` for variables, methods, and parameters.
+
+Example:
+
+```dart
+final projectName = "TaskFlow";
+
+void loadWorkItems() {}
+```
+
+Names should describe intent.
+
+Prefer:
+
+```dart
+isUserAuthenticated
+```
+
+Instead of:
+
+```dart
+flag
+```
+
+Prefer:
+
+```dart
+completedTaskCount
+```
+
+Instead of:
+
+```dart
+count
+```
+
+---
+
+## Boolean naming
+
+Boolean values should clearly indicate a condition.
+
+Use prefixes such as:
+
+* `is`
+* `has`
+* `can`
+* `should`
+
+Example:
+
+```dart
+bool isLoading;
+bool hasPermission;
+bool canEdit;
+```
+
+Avoid:
+
+```dart
+bool loading;
+bool permission;
+```
+
+---
+
+# 7. Handle data, API, and state correctly
+
+Application layers should have clear responsibilities.
+
+A feature should follow the flow:
+
+```text
+Widget
+   |
+Cubit / State Management
+   |
+Use Case / Business Logic
+   |
+Repository
+   |
+Data Source / API
+```
+
+Each layer should communicate only with the layer directly responsible for it.
+
+---
+
+## Widgets should not access data sources directly
+
+Avoid:
+
+```dart
+class WorkItemScreen extends StatelessWidget {
+
+  Future<void> loadItems() async {
+    await api.getWorkItems();
+  }
+
+}
+```
+
+The widget should only request data through the state layer.
+
+Preferred:
+
+```dart
+context.read<WorkItemCubit>().loadWorkItems();
+```
+
+The widget displays state. It does not manage application workflows.
+
+---
+
+## Repository responsibilities
+
+Repositories act as the boundary between business logic and external data sources.
+
+Repositories are responsible for:
+
+* Calling APIs.
+* Reading local storage.
+* Mapping responses into application models.
+* Handling data retrieval failures.
+
+Example:
+
+```dart
+class WorkItemRepository {
+
+  Future<List<WorkItem>> getWorkItems() async {
+    final response = await api.fetchWorkItems();
+
+    return response.map(
+      (item) => WorkItem.fromJson(item)
+    ).toList();
+  }
+
+}
+```
+
+Repositories should not contain UI-related decisions.
+
+---
+
+## Handle errors consistently
+
+Errors should be predictable across features.
+
+Avoid:
+
+```dart
+catch(e) {
+ print(e);
+}
+```
+
+Prefer meaningful application errors.
+
+Example:
+
+```dart
+throw NetworkException(
+  "Unable to load work items"
+);
+```
+
+The presentation layer should decide how errors are displayed.
+
+Example:
+
+```text
+Repository:
+"NetworkException"
+
+Cubit:
+"WorkItemLoadingFailed"
+
+Widget:
+Show error message
+```
+
+---
+
+## Manage state explicitly
+
+Every feature state should represent a clear application condition.
+
+Avoid unclear states:
+
+```dart
+bool loading;
+bool error;
+```
+
+Prefer meaningful states:
+
+```text
+Initial
+Loading
+Loaded
+Empty
+Failure
+```
+
+Example:
+
+```dart
+sealed class WorkItemState {}
+
+class WorkItemLoading extends WorkItemState {}
+
+class WorkItemLoaded extends WorkItemState {}
+
+class WorkItemFailure extends WorkItemState {}
+```
+
+Explicit states make UI behavior predictable.
+
+---
+
+# 8. Maintain code quality
+
+Readable code is easier to maintain, review, and extend.
+
+The goal is not to write the shortest code. The goal is to write code where another developer can understand the intention quickly.
+
+---
+
+## Avoid duplicate logic
+
+The same business rule should not exist in multiple places.
+
+Avoid:
+
+```dart
+if(task.completed && task.subtasksCompleted){
+   moveToDone();
+}
+```
+
+inside multiple screens.
+
+Prefer:
+
+```dart
+workItem.canMoveToDone();
+```
+
+A rule should have one owner.
+
+---
+
+## Keep functions focused
+
+A function should perform one clear responsibility.
+
+Avoid:
+
+```dart
+createProject()
+```
+
+performing:
+
+* validation
+* API calls
+* analytics
+* navigation
+* UI updates
+
+Prefer:
+
+```text
+validateProject()
+createProject()
+trackCreation()
+navigateToProject()
+```
+
+Small responsibilities make code easier to test and modify.
+
+---
+
+## Avoid unnecessary abstraction
+
+Not every repeated line requires a new class or framework.
+
+Create abstractions when they provide:
+
+* Reusability.
+* Clear ownership.
+* Easier maintenance.
+
+Avoid creating abstractions only because they appear architecturally advanced.
+
+Simple code is preferred over complicated solutions that solve problems that do not exist yet.
+
+---
+
+## Review checklist
+
+Before submitting code, verify:
+
+* Does this follow the feature-based structure?
+* Is business logic outside widgets?
+* Is duplicated logic removed?
+* Are names clear and meaningful?
+* Are errors handled consistently?
+* Can another developer understand this feature without unnecessary navigation?
+
+Code quality is a shared responsibility. Standards exist to make development predictable, not restrictive.
+
