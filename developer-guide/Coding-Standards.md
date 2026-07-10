@@ -1,85 +1,79 @@
 # Coding Standards
 
-## Keep business logic out of widgets
+## 1. Design Philosophy
 
-Widgets are responsible for rendering the current application state and forwarding user actions. They should not coordinate business workflows or make decisions that affect application behavior.
+### Write code for maintainability
 
-When business logic is implemented inside a widget, it becomes tied to the widget lifecycle. The same workflow cannot be reused by another screen, tested independently, or executed outside the UI. As the application grows, widgets become difficult to understand because rendering, state updates, validation, and data access are implemented in the same place.
+### Prefer explicit behavior
 
-Instead, treat a widget as an entry point. Collect the user's intent, then delegate the operation to the feature that owns the business process.
+### Optimize readability before optimization
 
-### Recommended
+---
 
-The widget forwards the request.
+## 2. Code Organization
 
-```dart
-ElevatedButton(
-  onPressed: () {
-    context.read<WorkItemCubit>().create(request);
-  },
-  child: const Text('Create'),
-)
-```
+### Organize by feature
 
-The feature owns the workflow.
+### Keep business logic out of widgets
 
-```dart
-Future<void> create(CreateWorkItemRequest request) async {
-  emit(const WorkItemLoading());
+### Keep widgets composable
 
-  final validation = validator.validate(request);
+### Avoid shared mutable state
 
-  if (!validation.isValid) {
-    emit(ValidationFailed(validation.errors));
-    return;
-  }
+---
 
-  final workItem = await repository.create(request);
+## 3. State Management
 
-  emit(WorkItemCreated(workItem));
-}
-```
+### Single source of truth
 
-The widget does not need to know:
+### Immutable state
 
-* how validation works,
-* where data is stored,
-* whether the request is cached,
-* whether analytics are recorded,
-* or whether additional events are published.
+### State ownership
 
-Its responsibility ends after forwarding the user's action.
+### State transitions
 
-### Avoid
+---
 
-```dart
-onPressed: () async {
-  if (titleController.text.isEmpty) {
-    showError();
-    return;
-  }
+## 4. Asynchronous Programming
 
-  final response = await api.createWorkItem(...);
+### Handle cancellation
 
-  await database.save(response);
+### Don't use BuildContext after await
 
-  notificationService.send(...);
+### Surface async failures
 
-  analytics.track(...);
+### Avoid nested Future chains
 
-  Navigator.pop(context);
-}
-```
+---
 
-Although this implementation works, the widget now owns validation, networking, persistence, analytics, notifications, and navigation. Any future change to the workflow requires modifying the UI, increasing coupling between presentation and business logic.
+## 5. Error Handling
 
-### Review guidance
+### Throw or return?
 
-During code review, ask the following questions:
+### User-facing errors
 
-* Can another screen reuse this workflow without copying code?
-* Would the business process continue to work if the UI changed completely?
-* Is the widget making business decisions instead of forwarding user intent?
-* Does the widget know more than it needs to?
+### Recoverable failures
 
-If the answer to any of these questions is **Yes**, move the business workflow into the owning feature before approving the change.
+### Unexpected exceptions
+
+---
+
+## 6. Performance
+
+### Rebuild boundaries
+
+### const constructors
+
+### Lazy initialization
+
+### List rendering
+
+---
+
+## 7. Code Reviews
+
+### Review checklist
+
+### Common smells
+
+### When to request refactoring
