@@ -2,133 +2,232 @@
 
 ## Overview
 
-This document defines the engineering standards used to develop and maintain TaskFlow.
+This document defines the engineering standards for developing and maintaining TaskFlow.
 
-The goal is to produce code that is predictable, maintainable, and consistent across the application. These standards apply to all production code regardless of feature, module, or contributor.
+The standards focus on code organization, ownership, implementation consistency, and long-term maintainability. They are intended to support engineering decisions during development and code review.
 
-Code reviews should validate compliance with these standards before implementation is approved.
-
----
-
-# Design Principles
-
-Every implementation should follow these principles.
-
-| Principle              | Standard                                                                   |
-| ---------------------- | -------------------------------------------------------------------------- |
-| Single Responsibility  | A component should solve one problem and have one reason to change.        |
-| Explicit Dependencies  | Declare dependencies through public interfaces. Avoid hidden dependencies. |
-| Separation of Concerns | Keep presentation, business logic, and infrastructure independent.         |
-| Composition            | Prefer composition over inheritance when extending functionality.          |
-| Simplicity             | Choose the simplest implementation that satisfies the requirement.         |
-
-These principles take precedence over individual implementation preferences.
+Formatting conventions are enforced through automated tooling and are not covered in this document.
 
 ---
 
-# Code Organization
+# Standard 01 – Feature Ownership
 
-Organize code around business capabilities instead of technical convenience.
+## Objective
 
-Related business logic, models, validation, and workflows should remain within the same module. Avoid distributing a single business process across multiple unrelated modules.
+Ensure that every business capability has a single implementation owner.
 
-Before creating a new component, determine whether the functionality belongs to an existing ownership boundary.
+## Standard
 
-**Preferred**
+Organize code by feature instead of technical layers.
 
-* Keep related logic together.
-* Group code by capability.
-* Minimize public surface area.
+Each feature owns its:
 
-**Avoid**
+* UI
+* State management
+* Business logic
+* Repository contracts
+* Models specific to the feature
 
-* Creating modules for a single utility or helper.
-* Splitting related business logic across multiple modules.
-* Sharing implementation details between modules.
+A feature should remain independently maintainable without requiring implementation changes in unrelated features.
 
----
+## Implementation
 
-# Business Logic
+A feature module should contain everything required to implement its business capability.
 
-Business rules belong to the capability that owns the business process.
+```text
+features/
+└── work_item/
+    ├── presentation/
+    ├── application/
+    ├── domain/
+    ├── data/
+    └── widgets/
+```
 
-Do not place business logic in presentation components, shared utilities, configuration classes, or infrastructure services.
+Shared functionality should be moved only when multiple features require the same implementation.
 
-Business rules should execute consistently regardless of how the capability is invoked.
+## Review Questions
 
-When business logic is duplicated across multiple modules, move it into the owning capability instead of maintaining parallel implementations.
-
----
-
-# Dependencies
-
-Every dependency should have a clear purpose.
-
-Before introducing a dependency, verify that:
-
-* The dependency supports the current module responsibility.
-* A public interface is available.
-* The dependency does not introduce unnecessary coupling.
-* The dependency does not duplicate existing functionality.
-
-Avoid implementation dependencies when a stable contract is available.
+* Does the feature own its business logic?
+* Is functionality duplicated across multiple features?
+* Can the feature be modified without changing another feature?
 
 ---
 
-# Public Interfaces
+# Standard 02 – Widget Responsibility
 
-Expose only functionality that other modules are expected to consume.
+## Objective
 
-Public interfaces define the supported contract between modules. Internal implementation details should remain private and may change without affecting consumers.
+Keep widgets focused on rendering and user interaction.
 
-Expanding a public interface increases the long-term maintenance responsibility of the owning module. New public members should be introduced only when they represent a stable capability.
+## Standard
+
+Widgets must not implement business workflows.
+
+A widget may:
+
+* Render application state.
+* Collect user input.
+* Dispatch user actions.
+* Display operation results.
+
+A widget must not:
+
+* Execute business rules.
+* Access persistence directly.
+* Call external services.
+* Coordinate multiple business operations.
+
+## Preferred
+
+```dart
+ElevatedButton(
+  onPressed: () {
+    context.read<WorkItemCubit>().create(request);
+  },
+  child: const Text('Create'),
+)
+```
+
+## Avoid
+
+```dart
+onPressed: () async {
+  final response = await api.createWorkItem(request);
+  await database.save(response);
+  notificationService.send(response);
+}
+```
+
+## Why
+
+Widgets rebuild frequently and should remain presentation-focused. Keeping business workflows outside the UI improves testability, reduces coupling, and keeps rendering logic predictable.
 
 ---
 
-# Validation
+# Standard 03 – State Management
 
-Validate data as close as possible to the point where it enters the application.
+## Objective
 
-Business validation belongs to the owning capability.
+Maintain a single source of truth for application state.
 
-Do not duplicate validation across presentation, service, and persistence layers unless each layer enforces a different requirement.
+## Standard
 
-Validation failures should produce predictable and actionable results.
+State changes must originate from the owning state management component.
+
+Widgets observe state but do not own business state.
+
+Avoid duplicating the same business data across multiple state objects.
+
+## Preferred
+
+```dart
+Cubit
+   │
+   ▼
+Repository
+   │
+   ▼
+State
+   │
+   ▼
+Widget
+```
+
+## Avoid
+
+```text
+Widget
+
+↓
+
+Local variables
+
+↓
+
+Repository
+
+↓
+
+Another Widget State
+```
+
+Independent copies of the same business data eventually become inconsistent.
 
 ---
 
-# Error Handling
+# Standard 04 – Repository Responsibilities
 
-Handle errors where meaningful recovery is possible.
+## Objective
 
-Do not suppress exceptions, ignore failures, or return ambiguous results that hide the underlying problem.
+Separate business workflows from data access.
 
-Errors should provide enough context for diagnosis without exposing implementation details to consumers.
+## Standard
 
-Unexpected failures should be logged before they leave the current execution boundary.
+Repositories manage data retrieval and persistence.
 
----
+Repositories must not:
 
-# Code Reviews
+* Perform navigation.
+* Update UI state.
+* Display dialogs.
+* Execute presentation logic.
 
-Every change should be reviewed for engineering quality, not only functional correctness.
+Repositories should return data or operation results. Business decisions remain with the calling feature.
 
-During review, verify the following:
+## Review Questions
 
-* Does the implementation follow the established ownership boundaries?
-* Is business logic implemented in the correct module?
-* Does the change introduce unnecessary dependencies?
-* Can the implementation be simplified without reducing clarity?
-* Are new public interfaces justified?
-* Does the implementation follow existing patterns?
-
-A change that functions correctly but weakens the architecture should not be approved.
+* Is the repository responsible only for data operations?
+* Does the repository expose implementation details?
+* Can the repository be reused without the UI?
 
 ---
 
-# Exceptions
+# Standard 05 – Asynchronous Operations
 
-Standards may be relaxed only when a technical constraint prevents the preferred implementation.
+## Objective
 
-Document the reason for the exception within the code review or design discussion. Future contributors should understand why the standard was not followed and whether the exception remains valid.
+Keep asynchronous workflows predictable and safe.
 
+## Standard
+
+Every asynchronous operation must complete in one of the following states:
+
+* Success
+* Failure
+* Cancellation
+
+Always handle failures explicitly.
+
+Avoid leaving asynchronous operations without completion handling.
+
+Do not use `BuildContext` after an `await` unless the widget is still mounted.
+
+## Preferred
+
+```dart
+if (!context.mounted) return;
+
+Navigator.of(context).pop();
+```
+
+## Why
+
+Widgets can be removed from the widget tree while an asynchronous operation is still running. Accessing an invalid `BuildContext` can result in runtime exceptions.
+
+---
+
+# Code Review Expectations
+
+Every implementation should answer the following questions before approval.
+
+| Review Area     | Verification                                         |
+| --------------- | ---------------------------------------------------- |
+| Ownership       | Does the correct feature own the implementation?     |
+| Widget Design   | Is business logic outside the widget?                |
+| State           | Is there a single source of truth?                   |
+| Repository      | Does it manage data only?                            |
+| Async           | Are failures and widget lifecycle handled correctly? |
+| Maintainability | Does the implementation follow existing patterns?    |
+
+Meeting these standards is part of the definition of done for all production code.
