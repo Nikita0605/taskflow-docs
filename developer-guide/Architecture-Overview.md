@@ -1,162 +1,188 @@
-# Engineering Architecture
+# Architecture Overview
 
-## Purpose
+## Introduction
 
-This document defines the architectural rules that govern application development in TaskFlow.
+TaskFlow is organized around business capabilities rather than technical layers.
 
-Every implementation must follow these rules to preserve consistency, maintain clear ownership, and prevent architectural drift. These guidelines apply to all modules, features, and platform services.
+Instead of separating code into directories such as **screens**, **models**, **repositories**, and **services**, each feature owns the implementation required to deliver its functionality. This keeps related code together, reduces cross-feature dependencies, and makes ownership explicit.
 
-Architectural decisions described in this document are mandatory unless an approved design decision explicitly defines an exception.
-
----
-
-# Architecture Philosophy
-
-TaskFlow is organized around **business capabilities**, not technical components.
-
-Each capability owns its business rules, data, workflows, and public interfaces. Features are developed and maintained independently, with communication occurring only through published contracts.
-
-The architecture prioritizes modularity over convenience. Short-term implementation decisions must not weaken long-term maintainability.
+The architecture is designed to support long-term maintainability. As the application grows, new functionality should extend an existing feature or introduce a new feature without requiring large-scale restructuring.
 
 ---
 
-# Capability Ownership
+# Architectural Goals
 
-Every business capability owns its implementation.
+The architecture follows four engineering goals.
 
-Ownership includes:
+### Keep features independent
 
-* Business rules
-* Internal models
-* Validation logic
-* State transitions
-* Persistence coordination
-* Public contracts
+Features should evolve without requiring implementation changes in unrelated areas of the application. A change to Sprint Management should not affect Project Management or Notifications unless there is a well-defined integration point.
 
-A capability must not modify or depend on the internal implementation of another capability.
-
-When functionality is required across multiple capabilities, it should be promoted to a shared platform service rather than duplicated.
+Feature independence reduces merge conflicts, simplifies testing, and allows multiple developers to work in parallel.
 
 ---
 
-# Dependency Rules
+### Keep ownership clear
 
-Dependencies define how modules communicate.
+Every piece of business functionality should have a single owner.
 
-The following rules apply throughout the application.
+For example, the Work Item feature owns operations such as creating, updating, assigning, and changing the status of work items.
 
-| Rule                                                           | Purpose                                                                                   |
-| -------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
-| Features communicate through published interfaces only.        | Preserves module isolation and prevents consumers from depending on implementation details. |
-| Direct feature-to-feature dependencies are prohibited.         | Reduces coupling and allows features to evolve independently.                               |
-| Business rules execute within the owning capability.           | Prevents duplicated business logic and inconsistent system behavior.                        |
-| Shared services remain independent of feature implementations. | Allows services to be reused without introducing feature-specific dependencies.             |
-| Infrastructure dependencies must not define business behavior. | Keeps business decisions independent of technical implementation.                           |
-| Circular dependencies are not permitted.                       | Maintains predictable dependency graphs and simplifies maintenance.                         |
+If developers need to update a business rule, they should immediately know where that implementation belongs.
 
-
-Violating these rules introduces hidden coupling and increases maintenance cost.
+Unclear ownership often leads to duplicated logic and inconsistent behavior.
 
 ---
 
-# Module Boundaries
+### Keep dependencies predictable
 
-A module represents an ownership boundary, not a directory.
+Dependencies should always move toward shared capabilities instead of directly between features.
 
-Everything inside a module is considered an implementation detail unless explicitly exposed through a public interface.
+For example, if both Projects and Boards need date formatting, that functionality belongs in a shared utility rather than one feature depending on the other.
 
-Modules should expose the smallest possible public surface.
-
-Internal implementation details, helper classes, utility methods, and supporting components must remain private to the owning module.
+Predictable dependencies reduce coupling and simplify future refactoring.
 
 ---
 
-# Communication Model
+### Optimize for change
 
-Modules communicate through explicit contracts.
+Most software changes are incremental.
 
-Permitted communication includes:
+The architecture is designed so that common changes affect a single feature instead of multiple unrelated parts of the application.
 
-* Public interfaces
-* Service contracts
-* Domain events
-* Shared platform services
-
-The following communication patterns are prohibited:
-
-* Direct access to another module's internal implementation
-* Shared mutable state between modules
-* Cross-module database access
-* Runtime modification of another module's business state
-
-Communication should remain explicit, predictable, and versionable.
+Adding a new work item field, modifying sprint rules, or introducing a notification type should require changes within the owning feature instead of restructuring the application.
 
 ---
 
-# State Ownership
+# Feature-Based Organization
 
-State has a single owner.
+The application is organized around business features.
 
-Each piece of application state must have one authoritative source responsible for creating, modifying, and exposing it.
+```text id="qv2xw4"
+lib/
+├── core/
+├── features/
+│   ├── project/
+│   ├── sprint/
+│   ├── work_item/
+│   ├── board/
+│   └── notification/
+├── shared/
+└── main.dart
+```
 
-State ownership must never be shared across modules.
+Each feature contains everything required to implement its business capability.
 
-When multiple modules require the same information, they consume the owner's published interface instead of maintaining duplicate state.
+Typical feature contents include presentation, state management, business logic, repositories, and feature-specific models.
 
-Duplicated ownership introduces synchronization problems and inconsistent system behavior.
-
----
-
-# Business Rules
-
-Business rules execute only within the capability that owns the associated business process.
-
-Validation, workflow transitions, authorization checks, and lifecycle management must remain inside the owning capability.
-
-Business logic must not be implemented within presentation components, shared utilities, infrastructure services, or integration layers.
-
----
-
-# Extension Strategy
-
-New functionality should integrate into the existing architecture before introducing new abstractions.
-
-Before creating a new module, verify that the functionality cannot be implemented within an existing ownership boundary.
-
-New shared services should be introduced only when multiple capabilities require the same behavior.
-
-Architectural growth should occur through extension rather than duplication.
+Developers should spend most of their time working inside a single feature directory.
 
 ---
 
-# Architectural Constraints
+# Shared Components
 
-The following constraints are enforced across the application.
+Not every piece of code belongs to a feature.
 
-| ID     | Constraint                                                            |
-| ------ | --------------------------------------------------------------------- |
-| EA-001 | Every business capability has a single owner.                         |
-| EA-002 | Features communicate through public contracts only.                   |
-| EA-003 | Direct feature-to-feature implementation dependencies are prohibited. |
-| EA-004 | Business rules execute within the owning capability.                  |
-| EA-005 | Shared services remain independent of business capabilities.          |
-| EA-006 | Application state has a single authoritative owner.                   |
-| EA-007 | Circular dependencies are not permitted.                              |
-| EA-008 | Public interfaces must remain stable and implementation-independent.  |
+Shared components provide functionality used across multiple features without owning business behavior.
+
+Examples include:
+
+* Theme configuration
+* Reusable UI components
+* Input validation helpers
+* Date and time formatting
+* Networking infrastructure
+* Application configuration
+
+Shared components should remain generic. Business-specific workflows should never be moved into shared modules simply because multiple features use them.
 
 ---
 
-# Common Architectural Violations
+# Request Flow
 
-The following implementation patterns are considered architectural violations.
+Most user interactions follow the same execution path.
 
-| Violation                                               | Impact                       |
-| ------------------------------------------------------- | ---------------------------- |
-| Duplicating business rules across multiple capabilities | Inconsistent system behavior |
-| Accessing another module's internal implementation      | Tight coupling               |
-| Sharing mutable state across capabilities               | State synchronization issues |
-| Introducing circular dependencies                       | Reduced maintainability      |
-| Placing business logic in presentation components       | Poor separation of concerns  |
-| Bypassing published interfaces                          | Loss of module isolation     |
+```text id="sl9jsu"
+User Action
+      │
+      ▼
+Widget
+      │
+      ▼
+State Management
+      │
+      ▼
+Repository
+      │
+      ▼
+Data Source
+      │
+      ▼
+Response
+      │
+      ▼
+Updated State
+      │
+      ▼
+Widget Rebuild
+```
 
-All architectural changes should preserve module independence, explicit ownership, and controlled dependencies.
+Each layer has a single responsibility.
+
+Widgets collect user input.
+
+State management coordinates the workflow.
+
+Repositories provide data access.
+
+Data sources communicate with local or remote systems.
+
+Keeping these responsibilities separate improves testability and prevents implementation details from leaking into the user interface.
+
+---
+
+# Where New Code Belongs
+
+Before creating a new class or file, identify the business capability it supports.
+
+Ask the following questions.
+
+* Does this solve a Project problem?
+* Does this belong to Work Items?
+* Is this specific to Sprint Management?
+* Is this reusable across multiple features?
+
+If the implementation belongs to one feature, place it inside that feature.
+
+Only move code into **shared** when multiple features require the same implementation and the functionality no longer represents a business capability.
+
+---
+
+# Architectural Boundaries
+
+Each feature owns its implementation.
+
+Other features should interact through public interfaces rather than internal implementation details.
+
+Avoid:
+
+* Sharing feature-specific models across unrelated features.
+* Importing internal classes from another feature.
+* Implementing the same business rule in multiple features.
+* Creating utility classes that contain feature-specific behavior.
+
+Respecting these boundaries allows features to evolve independently without introducing hidden dependencies.
+
+---
+
+# Architecture in Practice
+
+When implementing a new capability, think about ownership before implementation.
+
+Adding a new Project workflow should extend the Project feature.
+
+Changing Sprint planning rules should remain within the Sprint feature.
+
+Improving shared date formatting belongs in the shared module.
+
+The goal is not to eliminate dependencies entirely, but to make them intentional, predictable, and easy to understand.
