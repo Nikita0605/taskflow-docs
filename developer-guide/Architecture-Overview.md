@@ -4,185 +4,119 @@
 
 TaskFlow is organized around business capabilities rather than technical layers.
 
-Instead of separating code into directories such as **screens**, **models**, **repositories**, and **services**, each feature owns the implementation required to deliver its functionality. This keeps related code together, reduces cross-feature dependencies, and makes ownership explicit.
+Instead of separating the application into directories such as *screens*, *widgets*, *models*, or *repositories*, each feature owns the implementation required to deliver its business functionality. This approach keeps related code together, establishes clear ownership, and limits the impact of change.
 
-The architecture is designed to support long-term maintainability. As the application grows, new functionality should extend an existing feature or introduce a new feature without requiring large-scale restructuring.
+The architecture is designed to make everyday development predictable. A developer working on Sprint Management should spend most of their time inside the Sprint feature without understanding the internal implementation of Boards, Notifications, or Reporting.
 
----
-
-# Architectural Goals
-
-The architecture follows four engineering goals.
-
-### Keep features independent
-
-Features should evolve without requiring implementation changes in unrelated areas of the application. A change to Sprint Management should not affect Project Management or Notifications unless there is a well-defined integration point.
-
-Feature independence reduces merge conflicts, simplifies testing, and allows multiple developers to work in parallel.
+The architecture should make the correct implementation obvious.
 
 ---
 
-### Keep ownership clear
+## Design Philosophy
 
-Every piece of business functionality should have a single owner.
+The structure of an application should reflect how the business works, not how the framework is organized.
 
-For example, the Work Item feature owns operations such as creating, updating, assigning, and changing the status of work items.
+Projects, Work Items, Boards, Sprints, Notifications, and Reporting represent independent business capabilities. Each capability evolves at its own pace, has its own implementation, and solves a different problem.
 
-If developers need to update a business rule, they should immediately know where that implementation belongs.
+Organizing the codebase around these capabilities makes ownership easier to understand. When a business rule changes, there is a single place to implement that change.
 
-Unclear ownership often leads to duplicated logic and inconsistent behavior.
-
----
-
-### Keep dependencies predictable
-
-Dependencies should always move toward shared capabilities instead of directly between features.
-
-For example, if both Projects and Boards need date formatting, that functionality belongs in a shared utility rather than one feature depending on the other.
-
-Predictable dependencies reduce coupling and simplify future refactoring.
+This approach also reduces unnecessary coordination between teams. Developers working on different features should rarely modify the same files unless the change intentionally affects multiple capabilities.
 
 ---
 
-### Optimize for change
+## Why Feature-Based Architecture
 
-Most software changes are incremental.
+A common way to organize Flutter applications is by technical layers.
 
-The architecture is designed so that common changes affect a single feature instead of multiple unrelated parts of the application.
-
-Adding a new work item field, modifying sprint rules, or introducing a notification type should require changes within the owning feature instead of restructuring the application.
-
----
-
-# Feature-Based Organization
-
-The application is organized around business features.
-
-```text id="qv2xw4"
+```text
 lib/
-├── core/
-├── features/
-│   ├── project/
-│   ├── sprint/
-│   ├── work_item/
-│   ├── board/
-│   └── notification/
-├── shared/
-└── main.dart
+├── screens/
+├── widgets/
+├── models/
+├── repositories/
+└── services/
 ```
 
-Each feature contains everything required to implement its business capability.
+This structure works well for small applications because similar file types are grouped together.
 
-Typical feature contents include presentation, state management, business logic, repositories, and feature-specific models.
+As the application grows, however, a single feature becomes distributed across multiple directories. Implementing or debugging one workflow often requires moving between unrelated parts of the project. Ownership becomes difficult to identify because no single location represents the complete feature.
 
-Developers should spend most of their time working inside a single feature directory.
+TaskFlow avoids this problem by keeping implementation within the feature that owns the business capability.
 
----
-
-# Shared Components
-
-Not every piece of code belongs to a feature.
-
-Shared components provide functionality used across multiple features without owning business behavior.
-
-Examples include:
-
-* Theme configuration
-* Reusable UI components
-* Input validation helpers
-* Date and time formatting
-* Networking infrastructure
-* Application configuration
-
-Shared components should remain generic. Business-specific workflows should never be moved into shared modules simply because multiple features use them.
-
----
-
-# Request Flow
-
-Most user interactions follow the same execution path.
-
-```text id="sl9jsu"
-User Action
-      │
-      ▼
-Widget
-      │
-      ▼
-State Management
-      │
-      ▼
-Repository
-      │
-      ▼
-Data Source
-      │
-      ▼
-Response
-      │
-      ▼
-Updated State
-      │
-      ▼
-Widget Rebuild
+```text
+lib/
+└── features/
+    ├── project/
+    ├── sprint/
+    ├── work_item/
+    ├── board/
+    └── notification/
 ```
 
-Each layer has a single responsibility.
+A feature contains everything required to implement its functionality. Developers should be able to understand, modify, test, and extend a feature without navigating the entire application.
 
-Widgets collect user input.
-
-State management coordinates the workflow.
-
-Repositories provide data access.
-
-Data sources communicate with local or remote systems.
-
-Keeping these responsibilities separate improves testability and prevents implementation details from leaking into the user interface.
+The goal is not to eliminate layers, but to keep them together within the feature that owns them.
 
 ---
 
-# Where New Code Belongs
+## Feature Ownership
 
-Before creating a new class or file, identify the business capability it supports.
+Every business capability has a single implementation owner.
 
-Ask the following questions.
+For example, the Work Item feature owns operations such as creating, updating, assigning, prioritizing, and completing work items. These rules should not be implemented by Boards, Projects, or Notifications, even if those features interact with work items.
 
-* Does this solve a Project problem?
-* Does this belong to Work Items?
-* Is this specific to Sprint Management?
-* Is this reusable across multiple features?
+Ownership is more than file organization. It determines where business rules are implemented, where defects are fixed, and where new functionality is introduced.
 
-If the implementation belongs to one feature, place it inside that feature.
+When ownership is unclear, the same rule often appears in multiple locations. Over time those implementations diverge, producing inconsistent behavior that becomes increasingly difficult to maintain.
 
-Only move code into **shared** when multiple features require the same implementation and the functionality no longer represents a business capability.
+A useful question during implementation is:
 
----
+> **Which feature owns this business decision?**
 
-# Architectural Boundaries
-
-Each feature owns its implementation.
-
-Other features should interact through public interfaces rather than internal implementation details.
-
-Avoid:
-
-* Sharing feature-specific models across unrelated features.
-* Importing internal classes from another feature.
-* Implementing the same business rule in multiple features.
-* Creating utility classes that contain feature-specific behavior.
-
-Respecting these boundaries allows features to evolve independently without introducing hidden dependencies.
+The answer should determine where the code belongs.
 
 ---
 
-# Architecture in Practice
+## Shared Code
 
-When implementing a new capability, think about ownership before implementation.
+Not every implementation belongs to a feature.
 
-Adding a new Project workflow should extend the Project feature.
+Some functionality exists to support the application rather than a specific business capability. Examples include theme configuration, reusable UI components, networking infrastructure, logging, localization, and application-wide utilities.
 
-Changing Sprint planning rules should remain within the Sprint feature.
+Shared code should provide reusable technical capabilities. It should not become a collection of business logic extracted from multiple features.
 
-Improving shared date formatting belongs in the shared module.
+Moving code into a shared module simply because it is used twice often creates unnecessary dependencies and weakens feature ownership.
 
-The goal is not to eliminate dependencies entirely, but to make them intentional, predictable, and easy to understand.
+Before introducing shared code, ask whether the implementation represents a reusable technical capability or a business rule that belongs to a specific feature.
+
+If the answer is business behavior, it should remain with the owning feature.
+
+---
+
+## Adding New Functionality
+
+The first implementation decision is not *how* to build a feature, but *where* it belongs.
+
+Consider a requirement to introduce recurring work items.
+
+The immediate temptation might be to create a new shared service because the functionality appears reusable. A better approach is to identify the business capability responsible for recurring work items.
+
+If recurring behavior changes how work items are created and managed, the implementation belongs to the Work Item feature. If another feature later requires the same capability, shared abstractions can be introduced based on proven usage rather than anticipated requirements.
+
+This approach keeps the architecture stable as requirements evolve.
+
+Code should move into shared modules because the design requires it—not because future reuse is assumed.
+
+---
+
+## Architectural Trade-offs
+
+Every architectural decision introduces constraints.
+
+Feature-based organization reduces coupling and improves ownership, but it also encourages thoughtful boundaries between features. Developers may occasionally write similar implementations in different features before deciding whether a shared abstraction is justified.
+
+This trade-off is intentional.
+
+TaskFlow favors clear ownership over aggressive reuse because duplicated code can be refactored safely, while incorrect abstractions often become permanent architectural constraints.
+
+The architecture is designed to evolve through real requirements instead of speculative design. Shared solutions should emerge from repeated patterns, not from assumptions about future development.
