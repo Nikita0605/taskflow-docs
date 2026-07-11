@@ -189,8 +189,8 @@ This approach allows the architecture to scale as both the codebase and developm
       Project      Sprint      Work Item      Board      Notification
           │            │            │             │               │
           ├────────────┼────────────┼─────────────┼───────────────┤
-          │            │            │             │
-     Presentation  State  Business Logic  Repository  Data Sources
+          │            │            │             │               |
+     Presentation    State  Business Logic    Repository     Data Sources
 ```
 
 The architecture promotes feature independence while allowing features to share common technical capabilities through the shared layer. Business behavior remains inside the feature that owns it, ensuring changes remain localized and responsibilities stay clear.
