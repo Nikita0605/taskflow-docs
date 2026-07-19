@@ -61,15 +61,13 @@ Feature-specific implementation details, administrative configuration, and devel
 
 ## Related Documentation
 
-Additional TaskFlow documentation is available in the following sections of the repository:
+TaskFlow documentation is organized into multiple documentation sets, each intended for a specific audience.
 
-* Installation Guide
-* Developer Guide
-* API Documentation
-* Design Documentation
-* Architecture Documentation
-* Knowledge Base
-* Release Notes
-
-These guides complement the User Guide by covering installation, development, administration, and product design topics that fall outside the scope of end-user documentation.
-
+| Documentation | Audience |
+|--------------|----------|
+| Installation Guide | Users installing or accessing TaskFlow for the first time. |
+| User Guide | End users performing day-to-day project activities. |
+| API | Developers integrating with TaskFlow services. |
+| Developer Guide | Developers contributing to the TaskFlow application. |
+| Design | Product structure, data models, and design decisions. |
+| Knowledge Base | Frequently encountered issues, troubleshooting, and operational guidance. |
