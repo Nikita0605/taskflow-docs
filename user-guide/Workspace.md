@@ -1,117 +1,86 @@
 # Workspace
 
-| Document Information | |
-|----------------------|------------------------------------------------|
-| Product | TaskFlow |
-| Version | 1.0 |
-| Document Type | User Guide |
-| Audience | All Users |
-| Owner | Product Documentation Team |
-| Status | Draft |
-| Last Updated | July 2026 |
+## Introduction
+
+A workspace is the highest level of organization within TaskFlow. It establishes the environment in which teams collaborate, projects are managed, and work is governed. Every project, sprint, board, backlog, and work item exists within a workspace and inherits the policies, permissions, and collaboration model defined for that environment.
+
+Rather than representing a single project, a workspace represents a shared operating environment for a team, department, or organization. It provides a consistent structure that allows related projects to be managed together while maintaining a common set of users, workflows, and administrative settings.
 
 ---
 
-# Workspace
+## Understanding Workspace Boundaries
 
-A workspace is the starting point for everything you do in TaskFlow.
+A workspace defines the scope within which collaboration occurs. Users, projects, and project data remain associated with the workspace to which they belong, allowing organizations to separate work according to business units, products, customers, or operational requirements.
 
-It represents your organization, department, or team and provides a shared place where people can plan work, collaborate on projects, manage documentation, and track software delivery. Before you can create a project, invite team members, or plan a sprint, you need a workspace.
+This separation improves security, simplifies administration, and reduces the risk of unrelated teams accessing information outside their responsibilities. Although multiple workspaces may exist within the same organization, each operates independently with its own configuration, membership, and project structure.
 
-Think of a workspace as the digital home for your team. It keeps related projects together, stores shared knowledge, and provides a single place to manage members, permissions, dashboards, and reports.
-
-For example, a company named **Nova Hub** might create one workspace called **Nova Hub**. Inside that workspace, the engineering team can manage multiple projects such as a customer portal, a mobile application, and an internal HR system without switching between different environments.
-
-```text
-Nova Hub
-│
-├── Customer Portal
-├── Mobile Application
-├── Internal HR System
-├── Shared Wiki
-├── Dashboards
-└── Reports
-```
-
-Every member who joins the workspace can collaborate on the projects they have permission to access.
+When planning the application structure, create separate workspaces only when teams require independent administration, security boundaries, or operational processes. Projects with shared users and similar workflows are generally better managed within the same workspace.
 
 ---
 
-# Create a Workspace
+## Organize Projects Within a Workspace
 
-Creating a workspace only takes a few minutes.
+Projects provide the operational structure for delivering work, while the workspace provides the environment in which those projects exist.
 
-After signing in to TaskFlow, select **Create Workspace** from the home page. Enter a name that clearly identifies your organization or team, choose the appropriate time zone, and complete the setup.
+Related projects should remain within the same workspace whenever they share team members, reporting requirements, or development processes. This approach simplifies collaboration, improves visibility across projects, and reduces unnecessary administrative overhead.
 
-Once the workspace is created, TaskFlow opens the workspace home page, where you can begin inviting members and creating projects.
-
-> **Tip**
->
-> Choose a name that will still make sense a year from now. Names such as **Nova Hub**, **Engineering**, or **Product Development** are easier to recognize than temporary names like **Demo** or **Testing**.
+Creating additional workspaces to separate closely related projects often results in duplicated configuration, fragmented reporting, and increased maintenance.
 
 ---
 
-# Working Inside a Workspace
+## Collaboration Begins at the Workspace Level
 
-As your team begins using TaskFlow, the workspace becomes the central place for day-to-day collaboration.
+Workspace membership determines who can participate in projects and collaborate with other team members. Before users can contribute to planning, development, testing, or reporting activities, they must have access to the appropriate workspace.
 
-Projects created inside the workspace automatically share the same member directory, security model, and organizational settings. This allows teams to move between projects without managing separate accounts or permissions.
+Because projects inherit their collaborative environment from the workspace, managing membership at this level provides a consistent foundation for project access while reducing the need to configure permissions individually for every project.
 
-As work progresses, dashboards summarize project activity, reports provide historical insights, and the workspace wiki becomes a shared knowledge base for documentation, meeting notes, and technical decisions.
-
-Although each project has its own backlog, sprint plan, and board, they all remain connected through the same workspace.
+As teams evolve, workspace membership should be reviewed regularly to ensure users have access only to the projects and resources required for their responsibilities.
 
 ---
 
-# Managing Members
+## Manage Information Consistently
 
-Before anyone can contribute to a project, they must become a member of the workspace.
+A well-structured workspace promotes consistency across every project it contains. Teams that share workflows, terminology, and development practices benefit from operating within the same organizational environment, making it easier to move between projects without adapting to different working methods.
 
-Open **Workspace Settings**, select **Members**, and invite users using their email addresses. During the invitation process, assign an appropriate role so each member receives the permissions required for their responsibilities.
+Maintaining a consistent workspace structure also improves reporting, simplifies onboarding, and establishes predictable project governance across the organization.
 
-As your organization grows, members can be added, removed, or reassigned without affecting existing projects. This makes it easier to manage teams as people join, change roles, or leave the organization.
-
----
-
-# Workspace Settings
-
-Workspace settings control how the workspace behaves and how members interact with it.
-
-From the settings page, administrators can update the workspace name, manage members, configure roles and permissions, connect external services, and customize notification preferences.
-
-Most configuration changes apply to every project within the workspace, so it's a good idea to review these settings before inviting the rest of the team.
+For this reason, workspaces should be organized around long-term organizational structure rather than temporary initiatives or short-lived projects.
 
 ---
 
-# Best Practices
+## When to Create a New Workspace
 
-The way you organize workspaces has a direct impact on collaboration and administration.
+Creating a new workspace should be a deliberate administrative decision rather than the default approach for starting a new project.
 
-For most organizations, one workspace is enough. Create separate projects for different products or initiatives instead of creating multiple workspaces for the same team. This keeps documentation, dashboards, reports, and members in one place while reducing administrative overhead.
+A separate workspace is appropriate when teams require independent administration, different security requirements, isolated project data, or unique operational processes that cannot be shared with existing workspaces.
 
-Review member permissions regularly, especially after team changes. Grant administrative access only to users who are responsible for managing the workspace, and use project roles for day-to-day collaboration whenever possible.
+If the objective is simply to organize additional development work for the same team, creating a new project within an existing workspace is generally the more appropriate solution.
 
-Finally, establish clear naming conventions from the beginning. Consistent names make projects easier to find and reports easier to understand as the organization grows.
-
----
-
-# Common Issues
-
-| Issue | Resolution |
-|---------|------------|
-| Unable to create a workspace | Verify that your account has permission to create workspaces. |
-| Invitation email not received | Ask the user to check their spam folder or resend the invitation. |
-| Unable to access a project | Confirm that the user has been added to the workspace and assigned the appropriate role. |
-| Workspace settings are unavailable | Only Workspace Administrators can modify workspace settings. |
+Choosing the correct level of separation helps maintain a scalable and manageable project structure as the organization grows.
 
 ---
 
-# Related Topics
+## Best Practices
 
-If you're setting up TaskFlow for the first time, continue with the following guides:
+Design workspaces around organizational boundaries rather than individual projects.
 
-- Project
-- Members
-- Roles and Permissions
-- Dashboard
-- Administrator Guide
+Keep related projects together whenever they share users, workflows, or reporting requirements.
+
+Review workspace membership periodically to maintain appropriate access and collaboration.
+
+Create new workspaces only when administrative, security, or operational requirements justify the separation.
+
+Treat the workspace as a long-term organizational structure rather than a temporary project container.
+
+---
+
+## Related Topics
+
+Continue with the following guides to understand how work is organized within a workspace.
+
+* Projects
+* Dashboard
+* Backlog
+* Sprint
+* Board
+* Notifications
