@@ -4,19 +4,23 @@ Welcome to the TaskFlow documentation.
 
 TaskFlow is an Agile project management and DevOps collaboration platform that helps teams plan, track, and deliver software projects throughout the development lifecycle.
 
-This documentation provides information for people who use, manage, develop, and integrate with TaskFlow. The content is organized by audience so readers can quickly find the information relevant to their role.
+This documentation provides information for working with TaskFlow, from using product features and managing deployments to developing the application and integrating with TaskFlow services.
 
 ---
 
-# Who This Documentation Is For
+# Documentation Overview
 
-TaskFlow documentation is designed for different groups involved with the platform.
+TaskFlow documentation is organized into separate areas based on the type of information readers need. The User Guide focuses on product usage and common workflows. The Installation Guide covers application setup, configuration, and deployment activities.
 
-## TaskFlow Users
+The Developer Guide provides technical information for building and maintaining TaskFlow. The API Documentation explains how applications communicate with TaskFlow services. The Design Documentation describes product concepts, system models, and feature behavior.
 
-If you use TaskFlow to manage projects, organize work, or collaborate with your team, start with the **User Guide**.
+---
 
-The User Guide explains how to work with TaskFlow features, including projects, tasks, boards, sprints, workspaces, and notifications.
+# User Guide
+
+The User Guide helps users understand and work with TaskFlow features.
+
+It covers everyday activities such as managing workspaces, creating projects, tracking tasks, working with boards, planning sprints, and collaborating with team members.
 
 Start here:
 
@@ -26,11 +30,11 @@ user-guide/Getting-Started.md
 
 ---
 
-## Administrators
+# Installation Guide
 
-If you are responsible for installing, configuring, or maintaining TaskFlow environments, start with the **Installation Guide**.
+The Installation Guide explains how to set up and configure TaskFlow environments.
 
-The Installation Guide covers system requirements, installation procedures, application configuration, verification steps, and troubleshooting.
+It covers the requirements, installation process, application configuration, deployment verification, and troubleshooting steps required to prepare TaskFlow for use.
 
 Start here:
 
@@ -40,11 +44,11 @@ installation-guide/Installation.md
 
 ---
 
-## Developers
+# Developer Guide
 
-If you develop, maintain, or contribute to TaskFlow, start with the **Developer Guide**.
+The Developer Guide provides technical information for engineers working with the TaskFlow application.
 
-The Developer Guide provides technical information about the application architecture, development environment, project structure, configuration, coding practices, and contribution workflow.
+It covers application architecture, development environment setup, project structure, configuration, coding practices, and contribution workflows.
 
 Start here:
 
@@ -54,11 +58,11 @@ developer-guide/Architecture-Overview.md
 
 ---
 
-## API Developers
+# API Documentation
 
-If you are building an application or service that communicates with TaskFlow, use the **API Documentation**.
+The API Documentation explains how external applications and services interact with TaskFlow.
 
-The API Documentation explains how to interact with TaskFlow services, including authentication, authorization, API conventions, pagination, request and response behavior, and error handling.
+It covers API conventions, authentication, authorization, pagination, request and response behavior, and error handling.
 
 Start here:
 
@@ -68,11 +72,11 @@ api/API-Conventions.md
 
 ---
 
-## Product and Technical Teams
+# Design Documentation
 
-If you need to understand how TaskFlow features are designed and connected, use the **Design Documentation**.
+The Design Documentation explains the concepts and models that define TaskFlow.
 
-The Design Documentation explains product concepts, system models, workflows, permissions, automation, integrations, and application behavior.
+It covers product entities, work items, workflows, permissions, automation, integrations, and other system behaviors.
 
 Start here:
 
@@ -82,83 +86,9 @@ design/Project-Model.md
 
 ---
 
-# Documentation Areas
+# Repository Structure
 
-TaskFlow documentation is divided into the following areas:
-
-## User Guide
-
-The User Guide focuses on product usage and everyday workflows.
-
-It helps users understand how to navigate TaskFlow, manage projects, track work items, and collaborate with team members.
-
-Location:
-
-```
-user-guide/
-```
-
----
-
-## Installation Guide
-
-The Installation Guide focuses on deployment and environment setup.
-
-It explains how to install TaskFlow, configure required settings, verify the installation, and troubleshoot deployment issues.
-
-Location:
-
-```
-installation-guide/
-```
-
----
-
-## Developer Guide
-
-The Developer Guide focuses on application development and maintenance.
-
-It explains how TaskFlow is structured, configured, built, and extended.
-
-Location:
-
-```
-developer-guide/
-```
-
----
-
-## API Documentation
-
-The API Documentation focuses on integration with TaskFlow services.
-
-It explains how external applications communicate with TaskFlow and how developers should handle authentication, requests, responses, and errors.
-
-Location:
-
-```
-api/
-```
-
----
-
-## Design Documentation
-
-The Design Documentation focuses on the concepts and models behind TaskFlow.
-
-It explains how major features are represented and how different parts of the system work together.
-
-Location:
-
-```
-design/
-```
-
----
-
-# Documentation Structure
-
-The TaskFlow documentation repository follows this structure:
+The documentation repository is organized as follows:
 
 ```
 docs/
@@ -174,41 +104,23 @@ docs/
 └── user-guide/
 ```
 
-Each documentation area contains related topics and a README file to help readers navigate available content.
+Each documentation area contains related topics and a README file to help navigate available content.
 
 ---
 
 # Documentation Approach
 
-TaskFlow documentation is organized around the needs of the reader.
+TaskFlow documentation is written with a focus on clarity, accuracy, and usability.
 
-User documentation focuses on completing tasks within the application.
+Each document explains information at the level required for its purpose. User documentation focuses on completing tasks, while technical documentation provides deeper details about implementation, configuration, and integration.
 
-Developer documentation provides technical details required to understand, configure, and extend the system.
-
-API documentation explains integration requirements and service behavior.
-
-Installation documentation covers deployment, configuration, and maintenance activities.
-
-Design documentation explains product concepts and system behavior.
-
-This structure keeps information focused and helps readers find relevant content without searching through unrelated topics.
+Where applicable, documents include examples, validation steps, and troubleshooting guidance to help readers apply the information in real scenarios.
 
 ---
 
-# Documentation Principles
+# Documentation Structure
 
-## Clear and Direct
-
-TaskFlow documentation uses simple and precise language to explain concepts and procedures.
-
-The goal is to help readers complete tasks successfully rather than only describe product features.
-
----
-
-## Consistent Structure
-
-Documents follow a common structure where applicable:
+Documents follow a consistent structure where applicable:
 
 ```
 Overview
@@ -230,66 +142,46 @@ This structure helps readers understand the topic, complete required steps, and 
 
 ---
 
-## Practical Information
-
-Where applicable, documentation includes examples, commands, configuration details, and validation steps.
-
-Examples are included to help readers understand how TaskFlow behaves in real scenarios.
-
----
-
 # Writing Standards
 
 TaskFlow documentation follows practices based on:
 
-- Microsoft Writing Style Guide.
-- REST API documentation practices.
-- Software documentation standards.
+- Microsoft Writing Style Guide
+- REST API documentation practices
+- Software documentation standards
 
 The documentation focuses on:
 
-- Clear explanations.
+- Clear and direct language.
 - Consistent terminology.
+- Practical examples.
 - Action-oriented instructions.
-- Accurate technical information.
 - Maintainable content.
+
+Technical concepts are explained based on the expected knowledge level of the reader.
 
 ---
 
 # Contributing to Documentation
 
-TaskFlow documentation evolves along with the product.
+Documentation is maintained as part of the TaskFlow project.
 
-When updating documentation:
+When updating documentation, follow the existing structure, maintain consistent terminology, and verify technical accuracy.
 
-- Maintain the existing document structure.
-- Use consistent terminology.
-- Verify technical accuracy.
-- Update related documents when required.
-- Add examples where they improve understanding.
-
-Documentation improvements may include clarifying instructions, correcting outdated information, adding missing examples, or improving navigation between topics.
+Documentation updates may include improving explanations, adding examples, correcting outdated information, or improving navigation between related topics.
 
 ---
 
 # Feedback
 
-Documentation improves through continuous feedback.
+If you find missing, incorrect, or unclear information, provide feedback with details about the affected document and the suggested improvement.
 
-If you find missing, incorrect, or unclear information, provide:
-
-- The affected document or section.
-- A description of the issue.
-- Additional context or examples where helpful.
-
-Feedback helps keep TaskFlow documentation accurate, useful, and easier to maintain.
+Clear feedback helps keep TaskFlow documentation accurate and useful.
 
 ---
 
 # About This Documentation
 
-The TaskFlow documentation set provides a complete reference for using, developing, deploying, and integrating with the platform.
+The TaskFlow documentation set provides a complete reference for working with the platform. It covers product usage, application design, development practices, API integration, and deployment procedures.
 
-It covers user workflows, product concepts, application architecture, API usage, development practices, and deployment procedures.
-
-The documentation supports readers throughout the TaskFlow lifecycle, from initial setup and daily usage to advanced development and integration scenarios.
+The documentation supports the complete TaskFlow lifecycle, from initial setup and daily usage to advanced development and integration.
